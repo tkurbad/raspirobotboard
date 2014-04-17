@@ -1,5 +1,5 @@
-from torbot.torbot import *
+from torbot.torbot import TorBot
 
-torbot = TorBot()
+bot = TorBot()
 
-torbot.test()
+bot.test()

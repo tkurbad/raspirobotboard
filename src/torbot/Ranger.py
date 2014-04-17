@@ -7,7 +7,7 @@ class Ranger:
         connection.
     """
 
-    def __init__(self, rangerAddress = 0, serPort = '/dev/ttyAMA0',
+    def __init__(self, rangerAddress = 0, serDevice = '/dev/ttyAMA0',
         baud = 9600):
 
         self.ser = serial.Serial(port = serDevice,

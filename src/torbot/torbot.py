@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 
 from time import sleep
 
-from torbot.Ranger import Ranger
+from torbot.Ranger import *
 
 ## Define some standard variables
 
