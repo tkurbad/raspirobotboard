@@ -5,12 +5,22 @@ Source for the TorBot robot platform Python library.
 
 ####Prerequisites:
 
+```
+  $ sudo apt-get install i2c-tools python-rpi.gpio python-serial \
+        python-setuptools python-smbus
+```
+
+####Build the Python egg:
 
 ```
-  $ sudo apt-get install i2c-tools python-rpi.gpio python-serial python-smbus
+  $ python setup.py bdist_egg
 ```
 
+####Install the Python egg:
 
+```
+  $ sudo easy_install dist/torbot-1.0-py2.7.egg
+```
 
 ---
 

@@ -49,4 +49,4 @@ class Ranger:
     def get_version(self):
         """ Get the software version of the ranger device. """
         result = self._send_receive(93)
-        return = ord(result)
+        return ord(result)
