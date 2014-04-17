@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 
 from time import sleep
 
-from Ranger import *
+from Ranger import Ranger
 
 ## Define some standard variables
 
@@ -91,42 +91,42 @@ class TorBot:
         """ Move forward [for seconds]. """
         self.set_motors(1, 0, 1, 0)
         if seconds > 0:
-            time.sleep(seconds)
+            sleep(seconds)
             self.stop()
  
     def reverse(self, seconds = 0):
         """ Move backward [for seconds]. """
         self.set_motors(1, 1, 1, 1)
         if seconds > 0:
-            time.sleep(seconds)
+            sleep(seconds)
             self.stop()
     
     def left(self, seconds = 0):
         """ Turn inplace to the left [for seconds]. """
         self.set_motors(1, 0, 0, 0)
         if seconds > 0:
-            time.sleep(seconds)
+            sleep(seconds)
             self.stop()
 
     def right(self, seconds = 0):
         """ Turn inplace to the right [for seconds]. """
         self.set_motors(0, 0, 1, 0)
         if seconds > 0:
-            time.sleep(seconds)
+            sleep(seconds)
             self.stop()
 
     def hard_left(self, seconds = 0):
         """ Turn inplace to the left [for seconds]. """
         self.set_motors(1, 0, 1, 1)
         if seconds > 0:
-            time.sleep(seconds)
+            sleep(seconds)
             self.stop()
 
     def hard_right(self, seconds = 0):
         """ Turn inplace to the right [for seconds]. """
         self.set_motors(1, 1, 1, 0)
         if seconds > 0:
-            time.sleep(seconds)
+            sleep(seconds)
             self.stop()
 
     def sw_states(self):
