@@ -1,4 +1,4 @@
-from torbot.torbot import TorBot
+from torbot.torbot import *
 
 torbot = TorBot()
 
