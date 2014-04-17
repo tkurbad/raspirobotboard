@@ -3,17 +3,20 @@ torbot
 
 Source for the TorBot robot platform Python library.
 
-###Prerequisites:
+####Prerequisites:
 
 
 ```
   $ sudo apt-get install i2c-tools python-rpi.gpio python-serial python-smbus
 ```
 
+
+
+---
+
 All credits go to Simon Monk. For the original ReadMe of his
 raspirobotboard project, see below.
 
-------------------------------------------------------------------------
 
 raspirobotboard
 ===============
