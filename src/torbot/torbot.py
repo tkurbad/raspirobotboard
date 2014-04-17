@@ -1,5 +1,3 @@
-#raspirobotboard.py Library
-
 import RPi.GPIO as GPIO
 import serial
 import time
@@ -17,6 +15,10 @@ LED1_PIN = 7
 LED2_PIN = 8
 OC1_PIN = 22
 OC2_PIN = 21
+
+FRONT_RANGER_ADDR = 0x03
+LEFT_RANGER_ADDR = None
+RIGHT_RANGER_ADDR = None
 
 class RaspiRobot:
 

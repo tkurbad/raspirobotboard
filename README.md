@@ -1,3 +1,13 @@
+torbot
+======
+
+Source for the TorBot robot platform Python library.
+
+All credits go to Simon Monk. For the original ReadMe of his
+raspirobotboard project, see below.
+
+------------------------------------------------------------------------
+
 raspirobotboard
 ===============
 
