@@ -7,13 +7,15 @@ class Ranger:
         connection.
     """
 
-    def __init__(self, rangerAddress=0, serPort='/dev/ttyAMA0',
-        baud=9600):
+    def __init__(self, rangerAddress = 0, serPort = '/dev/ttyAMA0',
+        baud = 9600):
 
-        self.ser = serial.Serial(port=serPort, baudrate=baud, stopbits=2)
+        self.ser = serial.Serial(port = serDevice,
+                        baudrate = baud,
+                        stopbits = 2)
         self.rAddr = rangerAddress
 
-    def _send_receive(self, command, lenResult=2, delay=0.07):
+    def _send_receive(self, command, lenResult = 2, delay = 0.07):
         """ Helper method to send a command to the ranger and return the
             answer of the device. """
         self.ser.open()

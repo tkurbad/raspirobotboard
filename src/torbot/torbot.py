@@ -1,14 +1,28 @@
 import RPi.GPIO as GPIO
-import serial
-import time
 
-DEVICE = '/dev/ttyAMA0'
-BAUD = 9600
+from time import sleep
 
+from torbot.Ranger import Ranger
+
+## Define some standard variables
+
+# Serial port setup
+SER_DEVICE = '/dev/ttyAMA0'
+SER_BAUD = 9600
+
+# SRF02 range finder addresses
+FRONT_RANGER_ADDR = 3
+BACK_RANGER_ADDR = None
+LEFT_RANGER_ADDR = None
+RIGHT_RANGER_ADDR = None
+
+# GPIO setup - motors
 LEFT_GO_PIN = 17
 LEFT_DIR_PIN = 4
 RIGHT_GO_PIN = 10
-RIGHT_DIR_PIN = 25   
+RIGHT_DIR_PIN = 25
+
+# GPIO setup - switches, LEDs, open collector outputs
 SW1_PIN = 11
 SW2_PIN = 9
 LED1_PIN = 7
@@ -16,13 +30,14 @@ LED2_PIN = 8
 OC1_PIN = 22
 OC2_PIN = 21
 
-FRONT_RANGER_ADDR = 0x03
-LEFT_RANGER_ADDR = None
-RIGHT_RANGER_ADDR = None
 
 class TorBot:
+    """ Control the TorBot robot platform using Python on a
+        Raspberry PI. """
 
     def __init__(self):
+        """ Initialize some variables. """
+        
         GPIO.setmode(GPIO.BCM)
 
         GPIO.setup(LEFT_GO_PIN, GPIO.OUT)
@@ -37,101 +52,159 @@ class TorBot:
 
         GPIO.setup(SW1_PIN, GPIO.IN)
         GPIO.setup(SW2_PIN, GPIO.IN)
-        
-        self.ser = None
 
+        self.fRanger = None
+        self.bRanger = None
+        self.lRanger = None
+        self.rRanger = None
 
+        if FRONT_RANGER_ADDR is not None:
+            self.fRanger = Ranger(rangerAddress = FRONT_RANGER_ADDR,
+                                serDevice = SER_DEVICE,
+                                baud = SER_BAUD)
+        if BACK_RANGER_ADDR is not None:
+            self.bRanger = Ranger(rangerAddress = BACK_RANGER_ADDR,
+                                serDevice = SER_DEVICE,
+                                baud = SER_BAUD)
+        if LEFT_RANGER_ADDR is not None:
+            self.lRanger = Ranger(rangerAddress = LEFT_RANGER_ADDR,
+                                serDevice = SER_DEVICE,
+                                baud = SER_BAUD)
+        if RIGHT_RANGER_ADDR is not None:
+            self.rRanger = Ranger(rangerAddress = RIGHT_RANGER_ADDR,
+                                serDevice = SER_DEVICE,
+                                baud = SER_BAUD)
 
-    def set_motors(self, left_go, left_dir, right_go, right_dir):
-        GPIO.output(LEFT_GO_PIN, left_go)
-        GPIO.output(LEFT_DIR_PIN, left_dir)
-        GPIO.output(RIGHT_GO_PIN, right_go)
-        GPIO.output(RIGHT_DIR_PIN, right_dir)
+    def set_motors(self, leftGo = 0, leftDir = 0,
+                rightGo = 0, rightDir = 0):
+        """ Set the motors in motion. """
+        GPIO.output(LEFT_GO_PIN, leftGo)
+        GPIO.output(LEFT_DIR_PIN, leftDir)
+        GPIO.output(RIGHT_GO_PIN, rightGo)
+        GPIO.output(RIGHT_DIR_PIN, rightDir)
 
-    def forward(self, seconds=0):
+    def stop(self):
+        """ Stop all motors. """
+        self.set_motors()
+
+    def forward(self, seconds = 0):
+        """ Move forward [for seconds]. """
         self.set_motors(1, 0, 1, 0)
         if seconds > 0:
             time.sleep(seconds)
             self.stop()
-
-    def stop(self):
-        self.set_motors(0, 0, 0, 0)
  
-    def reverse(self, seconds=0):
+    def reverse(self, seconds = 0):
+        """ Move backward [for seconds]. """
         self.set_motors(1, 1, 1, 1)
         if seconds > 0:
             time.sleep(seconds)
             self.stop()
     
-    def left(self, seconds=0):
+    def left(self, seconds = 0):
+        """ Turn inplace to the left [for seconds]. """
+        self.set_motors(1, 0, 0, 0)
+        if seconds > 0:
+            time.sleep(seconds)
+            self.stop()
+
+    def right(self, seconds = 0):
+        """ Turn inplace to the right [for seconds]. """
+        self.set_motors(0, 0, 1, 0)
+        if seconds > 0:
+            time.sleep(seconds)
+            self.stop()
+
+    def hard_left(self, seconds = 0):
+        """ Turn inplace to the left [for seconds]. """
         self.set_motors(1, 0, 1, 1)
         if seconds > 0:
             time.sleep(seconds)
             self.stop()
 
-    def right(self, seconds=0):
+    def hard_right(self, seconds = 0):
+        """ Turn inplace to the right [for seconds]. """
         self.set_motors(1, 1, 1, 0)
         if seconds > 0:
             time.sleep(seconds)
             self.stop()
 
+    def sw_states(self):
+        """ Return the state of both switches as a tuple.
+            Possible values are
+            1: Open
+            0: Closed
+        """
+        return (GPIO.input(SW1_PIN), GPIO.input(SW2_PIN))
+
     def sw1_closed(self):
-        return not GPIO.input(SW1_PIN)
+        """ Is switch 1 closed? """
+        return not self.sw_states[1]
 
     def sw2_closed(self):
-        return not GPIO.input(SW2_PIN)
+        """ Is switch 2 closed? """
+        return not self.sw_states[2]
 
-    def set_led1(self, state):
+    def set_leds(self, led1State = False, led2State = False):
+        """ Switch on or off both onboard LEDs. """
+        GPIO.output(LED1_PIN, led1State)
+        GPIO.output(LED2_PIN, led2State)
+
+    def set_led1(self, state = False):
+        """ Switch onboard LED 1. """
         GPIO.output(LED1_PIN, state)
 
-    def set_led2(self, state):
+    def set_led2(self, state = False):
+        """ Switch onboard LED 2. """
         GPIO.output(LED2_PIN, state)
 
-    def set_oc1(self, state):
+    def set_ocs(self, oc1State = False, oc2State = False):
+        """ Switch on or off both open collector outputs. """
+        GPIO.output(OC1_PIN, oc1State)
+        GPIO.output(OC2_PIN, oc2State)
+
+    def set_oc1(self, state = False):
+        """ Switch open collector output 1. """
         GPIO.output(OC1_PIN, state)
 
-    def set_oc2(self, state):
+    def set_oc2(self, state = False):
+        """ Switch open collector output 2. """
         GPIO.output(OC2_PIN, state)    
 
-    def get_range_inch_raw(self):
-        msg = 'R000'
-        if self.ser == None:
-            self.ser = serial.Serial(DEVICE, BAUD)
-        if self.ser.inWaiting() > 4:
-            msg = self.ser.read(5)
-        reading = int(msg[1:4])
-        return reading
-
-    def get_range_inch(self):
-        readings = []
-        for i in range(0, 9):
-            reading = self.get_range_inch_raw()
-            if reading > 0:
-                readings.append(reading)
-        self.ser.flushInput()
-        if len(readings) == 0:
-               return 0
-        else:
-            return sum(readings) / len(readings)
-
-    def get_range_cm(self):
-        return int(self.get_range_inch() * 2.5)
-        
     def test(self):
-        raw_input("forward")
-        self.forward(2)
+        """ Interactively test various functions of the robot board. """
+        raw_input("Move forward")
+        self.forward(1)
 
-        raw_input("left")
-        self.left(2)
+        raw_input("Move left")
+        self.left(1)
 
-        raw_input("right")
-        self.right(2)
+        raw_input("Move right")
+        self.right(1)
 
-        raw_input("reverse")
-        self.reverse(2)
+        raw_input("Move hard left")
+        self.hard_left(1)
 
-        raw_input("stop")
+        raw_input("Move hard right")
+        self.hard_right(1)
+
+        raw_input("Move backwards")
+        self.reverse()
+
+        raw_input("Stop")
         self.stop()
 
+        raw_input("Turn on LEDs")
+        self.set_leds(True, True)
+
+        raw_input("Turn off LED1")
+        self.set_led1(False)
+
+        raw_input("Turn off LED2")
+        self.set_led2(False)
+
+        if self.fRanger is not None:
+            raw_input("Measure front obstacle distance")
+            print self.fRanger.get_range_cm()
 
         raw_input("End of test")
