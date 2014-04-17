@@ -20,7 +20,7 @@ FRONT_RANGER_ADDR = 0x03
 LEFT_RANGER_ADDR = None
 RIGHT_RANGER_ADDR = None
 
-class RaspiRobot:
+class TorBot:
 
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
