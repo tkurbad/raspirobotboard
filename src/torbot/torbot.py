@@ -102,29 +102,41 @@ class TorBot:
             self.stop()
     
     def left(self, seconds = 0):
-        """ Turn inplace to the left [for seconds]. """
-        self.set_motors(1, 0, 0, 0)
-        if seconds > 0:
-            sleep(seconds)
-            self.stop()
-
-    def right(self, seconds = 0):
-        """ Turn inplace to the right [for seconds]. """
+        """ Turn to the left [for seconds].
+            Left motor: stop
+            Right motor: forward
+        """
         self.set_motors(0, 0, 1, 0)
         if seconds > 0:
             sleep(seconds)
             self.stop()
 
+    def right(self, seconds = 0):
+        """ Turn to the right [for seconds].
+            Left motor: forward
+            Right motor: stop
+        """
+        self.set_motors(1, 0, 0, 0)
+        if seconds > 0:
+            sleep(seconds)
+            self.stop()
+
     def hard_left(self, seconds = 0):
-        """ Turn inplace to the left [for seconds]. """
-        self.set_motors(1, 0, 1, 1)
+        """ Turn inplace to the left [for seconds].
+            Left motor: reverse
+            Right motor: forward
+        """
+        self.set_motors(1, 1, 1, 0)
         if seconds > 0:
             sleep(seconds)
             self.stop()
 
     def hard_right(self, seconds = 0):
-        """ Turn inplace to the right [for seconds]. """
-        self.set_motors(1, 1, 1, 0)
+        """ Turn inplace to the right [for seconds].
+            Left motor: forward
+            Right motor: reverse
+        """
+        self.set_motors(1, 0, 1, 1)
         if seconds > 0:
             sleep(seconds)
             self.stop()
