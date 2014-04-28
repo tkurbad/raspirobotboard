@@ -1,7 +1,7 @@
 To create an .egg of the module (only tested on Python2)
 
-$ python setup.py bdist_egg
+$ python2 setup.py bdist_egg
 
 To install
 
-$ sudo python easy_install dist/torbot-1.0-py2.7.egg
+$ sudo easy_install dist/torbot-1.0-py2.7.egg
