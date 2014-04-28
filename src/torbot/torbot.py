@@ -38,6 +38,9 @@ class TorBot:
     def __init__(self):
         """ Initialize some variables. """
         
+        # Silence GPIO warnings
+        GPIO.setwarnings(False)
+
         GPIO.setmode(GPIO.BCM)
 
         GPIO.setup(LEFT_GO_PIN, GPIO.OUT)
