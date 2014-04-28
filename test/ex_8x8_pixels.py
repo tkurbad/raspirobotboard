@@ -2,7 +2,7 @@
 
 import time
 import datetime
-from Adafruit_8x8 import EightByEight
+from torbot.Adafruit_8x8 import EightByEight
 
 # ===========================================================================
 # 8x8 Pixel Example
