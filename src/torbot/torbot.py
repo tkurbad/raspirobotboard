@@ -13,8 +13,8 @@ SER_BAUD = 9600
 # SRF02 range finder addresses
 FRONT_RANGER_ADDR = 3
 BACK_RANGER_ADDR = None
-LEFT_RANGER_ADDR = None
-RIGHT_RANGER_ADDR = None
+LEFT_RANGER_ADDR = 2
+RIGHT_RANGER_ADDR = 1
 
 # GPIO setup - motors
 LEFT_GO_PIN = 17
@@ -221,5 +221,13 @@ class TorBot:
         if self.fRanger is not None:
             raw_input("Measure front obstacle distance")
             print self.fRanger.get_range_cm()
+
+        if self.lRanger is not None:
+            raw_input("Measure left obstacle distance")
+            print self.lRanger.get_range_cm()
+
+        if self.rRanger is not None:
+            raw_input("Measure right obstacle distance")
+            print self.rRanger.get_range_cm()
 
         raw_input("End of test")
