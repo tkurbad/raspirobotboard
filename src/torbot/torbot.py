@@ -4,6 +4,8 @@ import RPi.GPIO as GPIO
 
 from time import sleep
 
+from Adafruit_8x8 import EightByEight
+from ESpeak import ESpeak
 from Ranger import Ranger
 
 ## Define some standard variables
@@ -32,13 +34,25 @@ LED2_PIN = 8
 OC1_PIN = 22
 OC2_PIN = 21
 
+# espeak setup - speech output
+USE_ESPEAK = True
+ESPEAK_VOICE = 'default'
+ESPEAK_CAPITALS = None
+ESPEAK_PITCH = None
+ESPEAK_PUNCTUATION = None
+ESPEAK_RATE = 170
+ESPEAK_WORDGAP = 1
+
+# Adafruit LED matrix
+USE_ADAFRUIT_8x8 = True
+
 
 class TorBot:
     """ Control the TorBot robot platform using Python on a
         Raspberry PI. """
 
     def __init__(self):
-        """ Initialize some variables. """
+        """ Initialize some parameters. """
         
         # Silence GPIO warnings
         GPIO.setwarnings(False)
@@ -79,6 +93,20 @@ class TorBot:
             self.rRanger = Ranger(rangerAddress = RIGHT_RANGER_ADDR,
                                 serDevice = SER_DEVICE,
                                 baud = SER_BAUD)
+                                
+        if USE_ESPEAK:
+            self.speech = ESpeak(voice = ESPEAK_VOICE,
+                                capitals = ESPEAK_CAPITALS,
+                                pitch = ESPEAK_PITCH,
+                                punctuation = ESPEAK_PUNCTUATION,
+                                rate = ESPEAK_RATE,
+                                wordgap = ESPEAK_WORDGAP)
+
+        if USE_ADAFRUIT_8x8:
+            self.ledMatrix = EightByEight(address=0x70)
+            self.ledMatrix.clear()
+
+    ## motor control ###################################################
 
     def set_motors(self, leftGo = 0, leftDir = 0,
                 rightGo = 0, rightDir = 0):
@@ -146,6 +174,8 @@ class TorBot:
             sleep(seconds)
             self.stop()
 
+    ## SW / LED / OC ###################################################
+
     def sw_states(self):
         """ Return the state of both switches as a tuple.
             Possible values are
@@ -187,6 +217,15 @@ class TorBot:
     def set_oc2(self, state = False):
         """ Switch open collector output 2. """
         GPIO.output(OC2_PIN, state)    
+
+    ## espeak ##########################################################
+
+    def speak(self, message):
+        """ Speak using TTS. """
+        if USE_ESPEAK:
+            return self.speech.speak(message)
+
+    ## test ############################################################
 
     def test(self):
         """ Interactively test various functions of the robot board. """
@@ -231,5 +270,8 @@ class TorBot:
         if self.rRanger is not None:
             raw_input("Measure right obstacle distance")
             print self.rRanger.get_range_cm()
+
+        raw_input("Test speech")
+        self.speak("Hello, my name is Torbot. I am an autonomous robot.")
 
         raw_input("End of test")
