@@ -1,3 +1,5 @@
+#!/usr/bin/python2
+
 import serial
 
 from time import sleep
