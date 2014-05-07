@@ -1,0 +1,7 @@
+                Sharp GP1S51 Photointerruptor PinOut
+                ====================================
+
+Orange      - LED GND
+Green       - LED + 1.2 V
+Blue        - Phototransistor Collector
+Purple      - Phototransistor Emitter
