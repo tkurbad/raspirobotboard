@@ -216,7 +216,7 @@ class TorBot:
 
     def set_oc2(self, state = False):
         """ Switch open collector output 2. """
-        GPIO.output(OC2_PIN, state)    
+        GPIO.output(OC2_PIN, state)
 
     ## espeak ##########################################################
 
@@ -227,51 +227,60 @@ class TorBot:
 
     ## test ############################################################
 
-    def test(self):
+    def test(self, motors = True, leds = True, rangers = True,
+            odometers = True, speech = True):
         """ Interactively test various functions of the robot board. """
-        raw_input("Move forward")
-        self.forward(1)
+        if motors:
+            raw_input("Move forward")
+            self.forward(1)
 
-        raw_input("Move left")
-        self.left(1)
+            raw_input("Move left")
+            self.left(1)
+    
+            raw_input("Move right")
+            self.right(1)
+    
+            raw_input("Move hard left")
+            self.hard_left(1)
+    
+            raw_input("Move hard right")
+            self.hard_right(1)
+    
+            raw_input("Move backwards")
+            self.reverse()
+    
+            raw_input("Stop")
+            self.stop()
+    
+        if leds:
+            raw_input("Turn on LEDs")
+            self.set_leds(True, True)
 
-        raw_input("Move right")
-        self.right(1)
+            raw_input("Turn off LED1")
+            self.set_led1(False)
+    
+            raw_input("Turn off LED2")
+            self.set_led2(False)
 
-        raw_input("Move hard left")
-        self.hard_left(1)
+        if rangers:
+            if self.fRanger is not None:
+                raw_input("Measure front obstacle distance")
+                print self.fRanger.get_range_cm()
+    
+            if self.lRanger is not None:
+                raw_input("Measure left obstacle distance")
+                print self.lRanger.get_range_cm()
+    
+            if self.rRanger is not None:
+                raw_input("Measure right obstacle distance")
+                print self.rRanger.get_range_cm()
 
-        raw_input("Move hard right")
-        self.hard_right(1)
+        if odometers:
+            raw_input("Turn on open collector outputs")
+            self.set_ocs(True, True)
 
-        raw_input("Move backwards")
-        self.reverse()
-
-        raw_input("Stop")
-        self.stop()
-
-        raw_input("Turn on LEDs")
-        self.set_leds(True, True)
-
-        raw_input("Turn off LED1")
-        self.set_led1(False)
-
-        raw_input("Turn off LED2")
-        self.set_led2(False)
-
-        if self.fRanger is not None:
-            raw_input("Measure front obstacle distance")
-            print self.fRanger.get_range_cm()
-
-        if self.lRanger is not None:
-            raw_input("Measure left obstacle distance")
-            print self.lRanger.get_range_cm()
-
-        if self.rRanger is not None:
-            raw_input("Measure right obstacle distance")
-            print self.rRanger.get_range_cm()
-
-        raw_input("Test speech")
-        self.speak("Hello, my name is Torbot. I am an autonomous robot.")
+        if speech:
+            raw_input("Test speech")
+            self.speak("Hello, my name is Torbot. I am an autonomous robot.")
 
         raw_input("End of test")
