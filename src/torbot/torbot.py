@@ -278,6 +278,8 @@ class TorBot:
         if odometers:
             raw_input("Turn on open collector outputs")
             self.set_ocs(True, True)
+            raw_input("Turn off open collector outputs")
+            self.set_ocs(False, False)
 
         if speech:
             raw_input("Test speech")
