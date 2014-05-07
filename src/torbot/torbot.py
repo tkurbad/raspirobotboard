@@ -32,7 +32,7 @@ SW2_PIN = 9
 LED1_PIN = 7
 LED2_PIN = 8
 OC1_PIN = 22
-OC2_PIN = 21
+OC2_PIN = 27
 
 # espeak setup - speech output
 USE_ESPEAK = True
