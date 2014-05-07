@@ -69,8 +69,8 @@ class TorBot:
         GPIO.setup(OC1_PIN, GPIO.OUT)
         GPIO.setup(OC2_PIN, GPIO.OUT)
 
-        GPIO.setup(SW1_PIN, GPIO.IN)
-        GPIO.setup(SW2_PIN, GPIO.IN)
+        GPIO.setup(SW1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(SW2_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
         self.fRanger = None
         self.bRanger = None
