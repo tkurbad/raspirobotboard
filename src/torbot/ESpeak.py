@@ -33,7 +33,7 @@ class ESpeak:
                 wordgap = espeak.get_parameter(core.parameter_WORDGAP))
 
             
-    def set_parameters(voice = None, capitals = None, pitch = None,
+    def set_parameters(self, voice = None, capitals = None, pitch = None,
                     punctuation = None, rate = None, volume = None,
                     wordgap = None):
         """ Set espeak parameters. """
