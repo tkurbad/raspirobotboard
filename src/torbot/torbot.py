@@ -186,11 +186,11 @@ class TorBot:
 
     def sw1_closed(self):
         """ Is switch 1 closed? """
-        return not self.sw_states[1]
+        return not GPIO.input(SW1_PIN)
 
     def sw2_closed(self):
         """ Is switch 2 closed? """
-        return not self.sw_states[2]
+        return not GPIO.input(SW2_PIN)
 
     def set_leds(self, led1State = False, led2State = False):
         """ Switch on or off both onboard LEDs. """
