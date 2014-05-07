@@ -83,7 +83,8 @@ class ESpeak:
 
     def list_voices(self):
         """ List all available espeak voices. """
-        return [v['identifier'] for v in espeak.list_voices()]
+        voices = espeak.list_voices()
+        return [v['identifier'] for v in voices[:]]
 
     def speak(self, message):
         """ Speak the given text message. """
