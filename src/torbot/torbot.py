@@ -41,6 +41,7 @@ ESPEAK_CAPITALS = None
 ESPEAK_PITCH = None
 ESPEAK_PUNCTUATION = None
 ESPEAK_RATE = 170
+ESPEAK_VOLUME = 200
 ESPEAK_WORDGAP = 1
 
 # Adafruit LED matrix
@@ -100,6 +101,7 @@ class TorBot:
                                 pitch = ESPEAK_PITCH,
                                 punctuation = ESPEAK_PUNCTUATION,
                                 rate = ESPEAK_RATE,
+                                volume = ESPEAK_VOLUME,
                                 wordgap = ESPEAK_WORDGAP)
 
         if USE_ADAFRUIT_8x8:
