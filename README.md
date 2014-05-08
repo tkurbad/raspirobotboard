@@ -8,7 +8,6 @@ Source for the TorBot robot platform Python library.
 ```
   $ sudo apt-get install espeak i2c-tools python-espeak python-rpi.gpio \
         python-serial python-setuptools python-smbus
-  $ sudo apt-get purge jackd
 ```
 
 ####Get the sources:
@@ -24,6 +23,14 @@ Source for the TorBot robot platform Python library.
 ```
   $ cd /usr/share/alsa
   $ sudo patch -p1 < $TORBOTPROJECT/patches/001-alsa.conf.patch
+```
+
+####Enable jackd audio server:
+
+```
+  $ echo "tmpfs /run/shm    tmpfs   rw,nosuid,nodev,noexec,relatime,size=96M   0   0" \
+        > /etc/fstab
+  $ mount /run/shm -oremount,size=96M
 ```
 
 ####Lay an egg:
