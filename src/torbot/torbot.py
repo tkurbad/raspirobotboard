@@ -11,41 +11,49 @@ from Ranger import Ranger
 ## Define some standard variables
 
 # Serial port setup
-SER_DEVICE = '/dev/ttyAMA0'
-SER_BAUD = 9600
+SER_DEVICE          = '/dev/ttyAMA0'
+SER_BAUD            = 9600
 
 # SRF02 range finder addresses
-FRONT_RANGER_ADDR = 3
-BACK_RANGER_ADDR = None
-LEFT_RANGER_ADDR = 2
-RIGHT_RANGER_ADDR = 1
+FRONT_RANGER_ADDR   = 3
+BACK_RANGER_ADDR    = None
+LEFT_RANGER_ADDR    = 2
+RIGHT_RANGER_ADDR   = 1
 
 # GPIO setup - motors
-LEFT_GO_PIN = 17
-LEFT_DIR_PIN = 4
-RIGHT_GO_PIN = 10
-RIGHT_DIR_PIN = 25
+LEFT_GO_PIN         = 17
+LEFT_DIR_PIN        = 4
+RIGHT_GO_PIN        = 10
+RIGHT_DIR_PIN       = 25
 
-# GPIO setup - switches, LEDs, open collector outputs
-SW1_PIN = 11
-SW2_PIN = 9
-LED1_PIN = 7
-LED2_PIN = 8
-OC1_PIN = 22
-OC2_PIN = 27
+# GPIO setup - LEDs
+LED1_PIN            = 7
+LED2_PIN            = 8
+
+# GPIO setup - odometers / open collectors / switches
+#               * open collector outputs provide power
+#               * switches act as inputs
+#               * right side odometer uses OC1/SW1, left is OC2/SW2
+#  !!! IMPORTANT! See schematics/RaspiRobotBoard_Modifications.txt !!!
+USE_ODOMETERS       = True
+RIGHT_POWER_PIN     = OC1_PIN = 22
+RIGHT_DETECT_PIN    = SW1_PIN = 11
+LEFT_POWER_PIN      = OC2_PIN = 27
+LEFT_DETECT_PIN     = SW2_PIN = 9
 
 # espeak setup - speech output
-USE_ESPEAK = True
-ESPEAK_VOICE = 'default'
-ESPEAK_CAPITALS = None
-ESPEAK_PITCH = None
-ESPEAK_PUNCTUATION = None
-ESPEAK_RATE = 170
-ESPEAK_VOLUME = 200
-ESPEAK_WORDGAP = 1
+USE_ESPEAK          = True
+ESPEAK_VOICE        = 'default'
+ESPEAK_CAPITALS     = None
+ESPEAK_PITCH        = None
+ESPEAK_PUNCTUATION  = None
+ESPEAK_RATE         = 170
+ESPEAK_VOLUME       = 200
+ESPEAK_WORDGAP      = 1
 
 # Adafruit LED matrix
-USE_ADAFRUIT_8x8 = True
+USE_ADAFRUIT_8x8    = True
+ADAFRUIT_ADDRESS    = 0x70
 
 
 class TorBot:
@@ -70,8 +78,11 @@ class TorBot:
         GPIO.setup(OC1_PIN, GPIO.OUT)
         GPIO.setup(OC2_PIN, GPIO.OUT)
 
-        GPIO.setup(SW1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(SW2_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        pud = GPIO.PUD_OFF
+        if USE_ODOMETERS:
+            pud = GPIO.PUD_DOWN
+        GPIO.setup(SW1_PIN, GPIO.IN, pull_up_down = pud)
+        GPIO.setup(SW2_PIN, GPIO.IN, pull_up_down = pud)
 
         self.fRanger = None
         self.bRanger = None
@@ -105,7 +116,7 @@ class TorBot:
                                 wordgap = ESPEAK_WORDGAP)
 
         if USE_ADAFRUIT_8x8:
-            self.ledMatrix = EightByEight(address=0x70)
+            self.ledMatrix = EightByEight(address=ADAFRUIT_ADDRESS)
             self.ledMatrix.clear()
 
     ## motor control ###################################################
@@ -176,23 +187,7 @@ class TorBot:
             sleep(seconds)
             self.stop()
 
-    ## SW / LED / OC ###################################################
-
-    def sw_states(self):
-        """ Return the state of both switches as a tuple.
-            Possible values are
-            1: Open
-            0: Closed
-        """
-        return (GPIO.input(SW1_PIN), GPIO.input(SW2_PIN))
-
-    def sw1_closed(self):
-        """ Is switch 1 closed? """
-        return not GPIO.input(SW1_PIN)
-
-    def sw2_closed(self):
-        """ Is switch 2 closed? """
-        return not GPIO.input(SW2_PIN)
+    ## LEDs ############################################################
 
     def set_leds(self, led1State = False, led2State = False):
         """ Switch on or off both onboard LEDs. """
@@ -207,18 +202,94 @@ class TorBot:
         """ Switch onboard LED 2. """
         GPIO.output(LED2_PIN, state)
 
+    ## SW / OC #########################################################
+
+    def sw_states(self):
+        """ Return the state of both switches as a tuple.
+            Possible values are
+            1: Open
+            0: Closed
+
+            Returns None when odometers are enabled.
+        """
+        if not USE_ODOMETERS:
+            return (GPIO.input(SW1_PIN), GPIO.input(SW2_PIN))
+
+    def sw1_closed(self):
+        """ Is switch 1 closed?
+        
+            Returns None when odometers are enabled.        
+        """
+        if not USE_ODOMETERS:
+            return not GPIO.input(SW1_PIN)
+
+    def sw2_closed(self):
+        """ Is switch 2 closed?
+        
+            Returns None when odometers are enabled.        
+        """
+        if not USE_ODOMETERS:
+            return not GPIO.input(SW2_PIN)
+
     def set_ocs(self, oc1State = False, oc2State = False):
-        """ Switch on or off both open collector outputs. """
-        GPIO.output(OC1_PIN, oc1State)
-        GPIO.output(OC2_PIN, oc2State)
+        """ Switch on or off both open collector outputs.
+
+            Does nothing when odometers are enabled.
+        """
+        if not USE_ODOMETERS:
+            GPIO.output(OC1_PIN, oc1State)
+            GPIO.output(OC2_PIN, oc2State)
 
     def set_oc1(self, state = False):
-        """ Switch open collector output 1. """
-        GPIO.output(OC1_PIN, state)
+        """ Switch open collector output 1.
+
+            Does nothing when odometers are enabled.
+        """
+        if not USE_ODOMETERS:
+            GPIO.output(OC1_PIN, state)
 
     def set_oc2(self, state = False):
-        """ Switch open collector output 2. """
-        GPIO.output(OC2_PIN, state)
+        """ Switch open collector output 2.
+
+            Does nothing when odometers are enabled.
+        """
+        if not USE_ODOMETERS:
+            GPIO.output(OC2_PIN, state)
+
+    ## odometers #######################################################
+
+    def power_odometers(self, onoff = True):
+        """ Power up odometers.
+            onoff == True: Power on.
+            onoff == False: Power off.
+        
+            Does nothing when USE_ODOMETERS is False.
+        """
+        if USE_ODOMETERS:
+            GPIO.output(LEFT_POWER_PIN, on)
+            GPIO.output(RIGHT_POWER_PIN, on)
+
+    def get_odo_left(self):
+        """ Get state of left odometer. Return values.
+
+                1 : High. Phototransistor illuminated.
+                0 : Low.  Phototransistor dark.
+
+            Returns None when odometers are disabled.
+        """
+        if USE_ODOMETERS:
+            return GPIO.input(LEFT_DETECT_PIN)
+
+    def get_odo_right(self):
+        """ Get state of right odometer. Return values.
+
+                1 : High. Phototransistor illuminated.
+                0 : Low.  Phototransistor dark.
+
+            Returns None when odometers are disabled.
+        """
+        if USE_ODOMETERS:
+            return GPIO.input(RIGHT_DETECT_PIN)
 
     ## espeak ##########################################################
 
@@ -230,9 +301,14 @@ class TorBot:
     ## test ############################################################
 
     def test(self, motors = True, leds = True, rangers = True,
-            odometers = True, matrix = True, speech = True):
+            switches = True, opencollectors = True, odometers = True,
+            matrix = True, speech = True):
         """ Interactively test various functions of the robot board. """
         if motors:
+            if USE_ODOMETERS:
+                raw_input("Power up odometers")
+                self.power_odometers(True)
+
             raw_input("Move forward")
             self.forward(1)
 
@@ -277,19 +353,29 @@ class TorBot:
                 raw_input("Measure right obstacle distance")
                 print self.rRanger.get_range_cm()
 
-        if odometers:
-            raw_input("Turn on open collector outputs")
-            self.set_ocs(True, True)
-            raw_input("Test switch 1")
-            print self.sw1_closed()
-            raw_input("Test switch 1 again")
-            print self.sw1_closed()
-            raw_input("Test switch 2")
-            print self.sw2_closed()
-            raw_input("Test switch 2 again")
-            print self.sw2_closed()
-            raw_input("Turn off open collector outputs")
-            self.set_ocs(False, False)
+        if opencollectors:
+            if not USE_ODOMETERS:
+                raw_input("Turn on collector output 1")
+                self.set_oc1(True)
+                raw_input("Turn on collector output 2")
+                self.set_oc2(True)
+                raw_input("Turn off collector outputs")
+                self.set_ocs(False, False)
+            else:
+                print "Odometers are enabled, not testing open collectors."
+
+        if switches:
+            if not USE_ODOMETERS:
+                raw_input("Test switch 1")
+                print self.sw1_closed()
+                raw_input("Test switch 1 again")
+                print self.sw1_closed()
+                raw_input("Test switch 2")
+                print self.sw2_closed()
+                raw_input("Test switch 2 again")
+                print self.sw2_closed()
+            else:
+                print "Odometers are enabled, not testing switches."
 
         if matrix:
             raw_input("Test LED Matrix output")
