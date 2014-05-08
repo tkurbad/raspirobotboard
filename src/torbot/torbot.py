@@ -278,6 +278,10 @@ class TorBot:
         if odometers:
             raw_input("Turn on open collector outputs")
             self.set_ocs(True, True)
+            raw_input("Test switch 1")
+            print self.sw1_closed()
+            raw_input("Test switch 1 again")
+            print self.sw1_closed()
             raw_input("Test switch 2")
             print self.sw2_closed()
             raw_input("Test switch 2 again")
