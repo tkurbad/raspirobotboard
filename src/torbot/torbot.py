@@ -294,8 +294,8 @@ class TorBot:
             for x in range(0, 8):
                 for y in range(0, 8):
                     self.ledMatrix.setPixel(x, y)
-                    time.sleep(0.05)
-                time.sleep(0.5)
+                    sleep(0.05)
+                sleep(0.5)
             raw_input("Clear LED matrix")
             self.ledMatrix.clear()
 
