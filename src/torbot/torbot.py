@@ -228,7 +228,7 @@ class TorBot:
     ## test ############################################################
 
     def test(self, motors = True, leds = True, rangers = True,
-            odometers = True, speech = True):
+            odometers = True, matrix = True, speech = True):
         """ Interactively test various functions of the robot board. """
         if motors:
             raw_input("Move forward")
@@ -288,6 +288,16 @@ class TorBot:
             print self.sw2_closed()
             raw_input("Turn off open collector outputs")
             self.set_ocs(False, False)
+
+        if matrix:
+            raw_input("Test LED Matrix output")
+            for x in range(0, 8):
+                for y in range(0, 8):
+                    self.ledMatrix.setPixel(x, y)
+                    time.sleep(0.05)
+                time.sleep(0.5)
+            raw_input("Clear LED matrix")
+            self.ledMatrix.clear()
 
         if speech:
             raw_input("Test speech")
