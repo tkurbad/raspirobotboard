@@ -1,0 +1,41 @@
+--- alsa/alsa.conf.dist	2012-08-15 00:22:14.000000000 +0200
++++ alsa/alsa.conf	2014-05-08 18:40:55.418026585 +0200
+@@ -127,22 +127,22 @@
+ 
+ pcm.default cards.pcm.default
+ pcm.sysdefault cards.pcm.default
+-pcm.front cards.pcm.front
+-pcm.rear cards.pcm.rear
+-pcm.center_lfe cards.pcm.center_lfe
+-pcm.side cards.pcm.side
+-pcm.surround40 cards.pcm.surround40
+-pcm.surround41 cards.pcm.surround41
+-pcm.surround50 cards.pcm.surround50
+-pcm.surround51 cards.pcm.surround51
+-pcm.surround71 cards.pcm.surround71
+-pcm.iec958 cards.pcm.iec958
+-pcm.spdif iec958
+-pcm.hdmi cards.pcm.hdmi
+-pcm.dmix cards.pcm.dmix
+-pcm.dsnoop cards.pcm.dsnoop
+-pcm.modem cards.pcm.modem
+-pcm.phoneline cards.pcm.phoneline
++#pcm.front cards.pcm.front
++#pcm.rear cards.pcm.rear
++#pcm.center_lfe cards.pcm.center_lfe
++#pcm.side cards.pcm.side
++#pcm.surround40 cards.pcm.surround40
++#pcm.surround41 cards.pcm.surround41
++#pcm.surround50 cards.pcm.surround50
++#pcm.surround51 cards.pcm.surround51
++#pcm.surround71 cards.pcm.surround71
++#pcm.iec958 cards.pcm.iec958
++#pcm.spdif iec958
++#pcm.hdmi cards.pcm.hdmi
++#pcm.dmix cards.pcm.dmix
++#pcm.dsnoop cards.pcm.dsnoop
++#pcm.modem cards.pcm.modem
++#pcm.phoneline cards.pcm.phoneline
+ 
+ pcm.hw {
+ 	@args [ CARD DEV SUBDEV ]
