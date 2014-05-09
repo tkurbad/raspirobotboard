@@ -266,8 +266,8 @@ class TorBot:
             Does nothing when USE_ODOMETERS is False.
         """
         if USE_ODOMETERS:
-            GPIO.output(LEFT_POWER_PIN, on)
-            GPIO.output(RIGHT_POWER_PIN, on)
+            GPIO.output(LEFT_POWER_PIN, onoff)
+            GPIO.output(RIGHT_POWER_PIN, onoff)
 
     def get_odo_left(self):
         """ Get state of left odometer. Return values.
