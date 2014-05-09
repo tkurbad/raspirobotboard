@@ -1,7 +1,40 @@
-                Sharp GP1S51 Photointerruptor PinOut
-                ====================================
+             Sharp GP1S51/GP1S52 Photointerrupter PinOut
+             ===========================================
 
-Orange      - LED GND
-Green       - LED + 1.2 V
-Blue        - Phototransistor Collector
-Purple      - Phototransistor Emitter
+(1) Orange      - LED GND
+(2) Green       - LED + 1.2 V
+(3) Blue        - Phototransistor Collector
+(4) Purple      - Phototransistor Emitter
+
+
+                Rear View (Pin Side / Diode Upwards)
+                ------------------------------------
+
+
+                            +--------+
+                            |(2)  (1)|
+                            |        |
+                            |        |
+                            |(4)  (3)|
+                       +----+        +----+
+                       +------------------+
+                         /
+                Mounting Plate (Missing on GP1S52)
+
+
+           PinOut of Odometer Board (Component side Up)
+           --------------------------------------------
+
+
+SW1/OC1 (Right Odometer)      +-------------------------+
+                        (1)---|+                        |
+                        (2)---|+                        |
+                        (3)---|+                        |
+                        (4)---|+                    OC1 |
+                              |                         |
+SW2/OC2 (Left Odometer)       |                SW1      |
+                        (1)---|+                        |
+                        (2)---|+                    OC2 |
+                        (3)---|+                        |
+                        (4)---|+               SW2      |
+                              +-------------------------+
