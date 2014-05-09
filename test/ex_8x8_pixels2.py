@@ -22,5 +22,5 @@ test = ('11111111',
 grid.clear()
 row = 0
 for val in test:
-    grid.writeRowRaw(row, int('0' + val, 2) >> 1)
+    grid.writeRowRaw(row, int(val[7] + val[0:7], 2))
     row += 1
