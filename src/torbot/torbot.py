@@ -305,7 +305,7 @@ class TorBot:
             matrix = True, speech = True):
         """ Interactively test various functions of the robot board. """
         if motors:
-            if USE_ODOMETERS:
+            if odometers and USE_ODOMETERS:
                 raw_input("Power up odometers")
                 self.power_odometers(True)
 
@@ -330,6 +330,10 @@ class TorBot:
             raw_input("Stop")
             self.stop()
     
+            if odometers and USE_ODOMETERS:
+                raw_input("Power down odometers")
+                self.power_odometers(False)
+
         if leds:
             raw_input("Turn on LEDs")
             self.set_leds(True, True)
@@ -376,6 +380,21 @@ class TorBot:
                 print self.sw2_closed()
             else:
                 print "Odometers are enabled, not testing switches."
+
+        # Temporary
+        if odometers and USE_ODOMETERS:
+            raw_input("Power up odometers")
+            self.power_odometers(True)
+            raw_input("Get left odometer")
+            print self.get_odo_left()
+            raw_input("Get left odometer again")
+            print self.get_odo_left()
+            raw_input("Get right odometer")
+            print self.get_odo_right()
+            raw_input("Get right odometer again")
+            print self.get_odo_right()
+            raw_input("Shut down odometers")
+            self.power_odometers(False)
 
         if matrix:
             raw_input("Test LED Matrix output")
