@@ -67,4 +67,4 @@ _RAW_C = ['00000000',
 # numerical LED backpack matrix to the variable _xxx.
 for varName in vars().keys():
     if varName.startswith('_RAW_'):
-        vars()[varName[4:] = matrix2led(eval(varName))
+        vars()[varName[4:]] = matrix2led(eval(varName))
