@@ -4,5 +4,5 @@ from torbot.torbot import TorBot
 
 bot = TorBot()
 
-#bot.test()
-bot.test(motors = False)
+bot.test()
+#bot.test(motors = False)
