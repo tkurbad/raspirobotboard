@@ -272,8 +272,8 @@ class TorBot:
     def get_odo_left(self):
         """ Get state of left odometer. Return values.
 
-                1 : High. Phototransistor illuminated.
-                0 : Low.  Phototransistor dark.
+                1 : High. Phototransistor dark.
+                0 : Low.  Phototransistor illuminated.
 
             Returns None when odometers are disabled.
         """
@@ -283,8 +283,8 @@ class TorBot:
     def get_odo_right(self):
         """ Get state of right odometer. Return values.
 
-                1 : High. Phototransistor illuminated.
-                0 : Low.  Phototransistor dark.
+                1 : High. Phototransistor dark.
+                0 : Low.  Phototransistor illuminated.
 
             Returns None when odometers are disabled.
         """
