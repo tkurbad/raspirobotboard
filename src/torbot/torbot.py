@@ -1,18 +1,62 @@
 #!/usr/bin/python2
 
-import RPi.GPIO as GPIO
+import os.path
+
+try:
+    import RPi.GPIO as GPIO
+except ImportError, e:
+    # We are probably not on a Raspberry PI. Fake some methods.
+    class GPIO:
+        IN = 0
+        OUT = 0
+        BCM = 0
+        PUD_DOWN = 0
+        PUD_OFF = 0
+
+        @staticmethod
+        def setup(pin, mode, pull_up_down = 0):
+            pass
+
+        @staticmethod
+        def setmode(mode):
+            pass
+
+        @staticmethod
+        def setwarnings(debug = False):
+            pass
+
+        @staticmethod
+        def output(pin, value):
+            pass
+        
+        @staticmethod
+        def input(pin):
+            return 0
+
 
 from time import sleep
 
 from EightByEight import EightByEight
-from ESpeak import ESpeak
+
+try:
+    from ESpeak import ESpeak
+    USE_ESPEAK = True
+except ImportError, e:
+    USE_ESPEAK = False
+
 from Ranger import Ranger
 
 ## Define some standard variables
 
 # Serial port setup
 SER_DEVICE          = '/dev/ttyAMA0'
-SER_BAUD            = 9600
+SER_BAUD           = 9600
+
+if not os.path.exists('/dev/ttyAMA0'):
+    # Is this really a Raspberry PI?
+    USE_SERIAL      = False
+    SER_DEVICE      = '/dev/ttyS0'
+    SER_BAUD        = 115200
 
 # SRF02 range finder addresses
 FRONT_RANGER_ADDR   = 3
@@ -42,7 +86,7 @@ LEFT_POWER_PIN      = OC2_PIN = 27
 LEFT_DETECT_PIN     = SW2_PIN = 9
 
 # espeak setup - speech output
-USE_ESPEAK          = True
+#USE_ESPEAK          = True
 ESPEAK_VOICE        = 'default'
 ESPEAK_CAPITALS     = None
 ESPEAK_PITCH        = None
@@ -344,7 +388,7 @@ class TorBot:
             raw_input("Turn off LED2")
             self.set_led2(False)
 
-        if rangers:
+        if rangers and USE_SERIAL:
             if self.fRanger is not None:
                 raw_input("Measure front obstacle distance")
                 print self.fRanger.get_range_cm()
@@ -398,11 +442,8 @@ class TorBot:
 
         if matrix:
             raw_input("Test LED Matrix output")
-            for x in range(0, 8):
-                for y in range(0, 8):
-                    self.ledMatrix.setPixel(x, y)
-                    sleep(0.05)
-                sleep(0.5)
+            self.ledMatrix.display_string_scrolling('This is a test.',
+                                                    turnaround = False)
             raw_input("Clear LED matrix")
             self.ledMatrix.clear()
 
