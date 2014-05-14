@@ -19,7 +19,9 @@ class MatrixChars:
               'xxxxxxxx',
               'xxxxxxxx',
               'xxxxxxxx']
-    
+
+    ## LETTERS
+
     # Letter 'A'
     _RAW_A = ['00000000',
               '00000011',
@@ -280,6 +282,28 @@ class MatrixChars:
               '11000111',
               '11000011']
 
+    ## SYMBOLS
+
+    # Symbol '@'
+    _RAW_AT = ['00000000',
+               '00011000',
+               '01100110',
+               '10111101',
+               '10100101',
+               '10011001',
+               '01100110',
+               '00011000']
+
+    # Symbol ','
+    _RAW_COMMA = ['00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000110',
+                  '00000111',
+                  '00000000']
+
     # Symbol '.'
     _RAW_DOT = ['00000000',
                 '00000000',
@@ -310,16 +334,6 @@ class MatrixChars:
                      '10111000',
                      '00000000']
 
-    # Symbol ','
-    _RAW_COMMA = ['00000000',
-                  '00000000',
-                  '00000000',
-                  '00000000',
-                  '00000000',
-                  '00000110',
-                  '00000111',
-                  '00000000']
-
     # Symbol ';'
     _RAW_SEMICOL = ['00000000'
                     '00000000',
@@ -329,6 +343,16 @@ class MatrixChars:
                     '00110110',
                     '00110111',
                     '00000000']
+
+    # Symbol ' '
+    _RAW_SPACE = ['00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000']
 
 
     def __init__(self):
@@ -353,11 +377,13 @@ class MatrixChars:
             letter/symbol -> MatrixChars.
         """
         self.TRANSLATION = {
+            '@': self._AT,
+            ',': self._COMMA,
             '.': self._DOT,
             '!': self._EXCLAIM,
             '?': self._QUESTION,
-            ',': self._COMMA,
             ';': self._SEMICOL,
+            ' ': self._SPACE,
         }
 
         for i in range(65, 91):
@@ -382,7 +408,11 @@ class MatrixChars:
             binList.append(self.row2led(row))
         return binList
 
-    def string2matrix(self, message):
+    def message2matrix(self, message):
         """ Convert a string message to an input stream for the LED
             backpack.
         """
+        matrixOutput = []
+        for character in message:
+            matrixOutput.extend(self.TRANSLATION[character.upper()])
+        return matrixOutput
