@@ -2,30 +2,35 @@
 
 import smbus
 
+class FakeSMBus(object):
+    """ Fake a subset of the smbus.SMBus class for testing the code on
+        non Raspberry PI computers.
+    """
+    def read_byte_data(self, address, reg):
+        return None
+
+    def write_byte_data(self, address, reg, value):
+        pass
+
+    def read_word_data(self, address, reg):
+        return None
+
+    def write_word_data(self, address, reg, value):
+        pass
+
+    def read_i2c_block_data(self, address, reg, length):
+        return None
+
+    def write_i2c_block_data(self, address, reg, value):
+        pass
+
+
 # ===========================================================================
 # Adafruit_I2C Class
 # ===========================================================================
 
-class Adafruit_I2C :
+class Adafruit_I2C(object):
 
-    @staticmethod
-    def getPiRevision():
-        """ Gets the revision number of the Raspberry Pi board. """
-        # Courtesy quick2wire-python-api
-        # https://github.com/quick2wire/quick2wire-python-api
-        try:
-            with open('/proc/cpuinfo','r') as f:
-                for line in f:
-                    if line.startswith('Revision'):
-                        return 1 if line.rstrip()[-1] in ['1','2'] else 2
-        except:
-            return 0
-
-    @staticmethod
-    def getPiI2CBusNumber():
-        """ Gets the I2C bus number /dev/i2c#. """
-        return 1 if Adafruit_I2C.getPiRevision() > 1 else 0
- 
     def __init__(self, address, busnum = None, debug = False):
         """ Constructor. """
         self.address = address
@@ -36,10 +41,30 @@ class Adafruit_I2C :
         # busnum = 0; # Force I2C0 (early 256MB Pi's)
         # busnum = 1; # Force I2C1 (512MB Pi's)
         if busnum is None:
-            busnum = Adafruit_I2C.getPiI2CBusNumber()
-        self.bus = smbus.SMBus(busnum)
+            busnum = self._getPiI2CBusNumber()
+        try:
+            self.bus = smbus.SMBus(busnum)
+        except IOError, e:
+            self.bus = FakeSMBus()
+            print 'WARNING: Could not open I2C bus. Is this really a Raspberry PI?'
         self.debug = debug
 
+    def _getPiRevision(self):
+        """ Gets the revision number of the Raspberry Pi board. """
+        # Courtesy quick2wire-python-api
+        # https://github.com/quick2wire/quick2wire-python-api
+        try:
+            with open('/proc/cpuinfo','r') as f:
+                for line in f:
+                    if line.startswith('Revision'):
+                        return 1 if line.rstrip()[-1] in ['1','2'] else 2
+        except IOError, e:
+            return 0
+
+    def _getPiI2CBusNumber(self):
+        """ Gets the I2C bus number /dev/i2c#. """
+        return 1 if self._getPiRevision() > 1 else 0
+ 
     def reverseByteOrder(self, data):
         """ Reverses the byte order of an int (16-bit) or long (32-bit)
             value.
@@ -127,7 +152,7 @@ class Adafruit_I2C :
     def readU16(self, reg):
         """ Reads an unsigned 16-bit value from the I2C device. """
         try:
-            result = self.bus.read_word_data(self.address,reg)
+            result = self.bus.read_word_data(self.address, reg)
             if (self.debug):
                 print ("I2C: Device 0x%02X returned 0x%04X from reg 0x%02X" %
                     (self.address, result & 0xFFFF, reg))
@@ -138,7 +163,7 @@ class Adafruit_I2C :
     def readS16(self, reg):
         """ Reads a signed 16-bit value from the I2C device. """
         try:
-            result = self.bus.read_word_data(self.address,reg)
+            result = self.bus.read_word_data(self.address, reg)
             if (self.debug):
                 print ("I2C: Device 0x%02X returned 0x%04X from reg 0x%02X" %
                     (self.address, result & 0xFFFF, reg))
