@@ -29,7 +29,7 @@ class MatrixChars:
               '00111110',
               '00001110',
               '00000011']
-    
+
     # Letter 'B'
     _RAW_B = ['00000000',
               '01100110',
@@ -50,9 +50,318 @@ class MatrixChars:
               '11111111',
               '00111100']
 
+    # Letter 'D'
+    _RAW_D = ['00000000',
+              '01111110',
+              '11100111',
+              '11000011',
+              '11000011',
+              '11000011',
+              '11111111',
+              '11111111']
+
+    # Letter 'E'
+    _RAW_E = ['00000000',
+              '11000011',
+              '11011011',
+              '11011011',
+              '11011011',
+              '11011011',
+              '11111111',
+              '11111111']
+
+    # Letter 'F'
+    _RAW_F = ['00000000',
+              '11000000',
+              '11011000',
+              '11011000',
+              '11011000',
+              '11011000',
+              '11111111',
+              '11111111']
+
+    # Letter 'G'
+    _RAW_G = ['00000000',
+              '01101110',
+              '11001111',
+              '11000011',
+              '11000011',
+              '11100111',
+              '11111111',
+              '00111100']
+
+    # Letter 'H'
+    _RAW_H = ['00000000',
+              '11111111',
+              '11111111',
+              '00011000',
+              '00011000',
+              '00011000',
+              '11111111',
+              '11111111']
+
+    # Letter 'I'
+    _RAW_I = ['00000000',
+              '00000000',
+              '00000000',
+              '11000011',
+              '11111111',
+              '11111111',
+              '11000011',
+              '00000000']
+
+    # Letter 'J'
+    _RAW_J = ['00000000',
+              '00000000',
+              '00000000',
+              '11111111',
+              '11111111',
+              '11000011',
+              '00000011',
+              '00000110']
+
+    # Letter 'K'
+    _RAW_K = ['00000000',
+              '11000011',
+              '11000011',
+              '01100110',
+              '00111100',
+              '00011000',
+              '11111111',
+              '11111111']
+
+    # Letter 'L'
+    _RAW_L = ['00000000',
+              '00000111',
+              '00000011',
+              '00000011',
+              '00000011',
+              '00000011',
+              '11111111',
+              '11111111']
+
+    # Letter 'M'
+    _RAW_M = ['00000000',
+              '11111111',
+              '11111111',
+              '00110000',
+              '00011000',
+              '00110000',
+              '11111111',
+              '11111111']
+
+    # Letter 'N'
+    _RAW_N = ['00000000',
+              '11111111',
+              '11111111',
+              '00001110',
+              '00111100',
+              '01110000',
+              '11111111',
+              '11111111']
+
+    # Letter 'O'
+    _RAW_O = ['00000000',
+              '00111100',
+              '11111111',
+              '11100111',
+              '11000011',
+              '11100111',
+              '11111111',
+              '00111100']
+
+    # Letter 'P'
+    _RAW_P = ['00000000',
+              '00110000',
+              '01111000',
+              '11001100',
+              '11001100',
+              '11001100',
+              '11111111',
+              '11111111']
+
+    # Letter 'Q'
+    _RAW_Q = ['00000000',
+              '00111011',
+              '11111111',
+              '11100110',
+              '11000011',
+              '11100111',
+              '11111111',
+              '00111100']
+
+    # Letter 'R'
+    _RAW_R = ['00000000',
+              '00110000',
+              '01111001',
+              '11001111',
+              '11001110',
+              '11001100',
+              '11111111',
+              '11111111']
+
+    # Letter 'S'
+    _RAW_S = ['00000000',
+              '01100110',
+              '11001111',
+              '11001111',
+              '11011011',
+              '11110011',
+              '11110011',
+              '01100110']
+
+    # Letter 'T'
+    _RAW_T = ['00000000',
+              '00000000',
+              '11000000',
+              '11000011',
+              '11111111',
+              '11111111',
+              '11000011',
+              '11000000']
+
+    # Letter 'U'
+    _RAW_U = ['00000000',
+              '11111100',
+              '11111110',
+              '00000011',
+              '00000011',
+              '00000011',
+              '11111110',
+              '11111100']
+
+    # Letter 'V'
+    _RAW_V = ['00000000',
+              '11000000',
+              '01111100',
+              '00001110',
+              '00000011',
+              '00001110',
+              '01111100',
+              '11000000']
+
+    # Letter 'W'
+    _RAW_W = ['00000000',
+              '11111110',
+              '11111111',
+              '00001100',
+              '00011000',
+              '00001100',
+              '11111111',
+              '11111110']
+
+    # Letter 'X'
+    _RAW_X = ['00000000',
+              '11000011',
+              '11100111',
+              '00111100',
+              '00011000',
+              '00111100',
+              '11100111',
+              '11000011']
+
+    # Letter 'Y'
+    _RAW_Y = ['00000000',
+              '11000000',
+              '11110000',
+              '00111111',
+              '00011111',
+              '00111000',
+              '11100000',
+              '11000000']
+
+    # Letter 'Z'
+    _RAW_Z = ['00000000',
+              '11000011',
+              '11100011',
+              '11110011',
+              '11011011',
+              '11001111',
+              '11000111',
+              '11000011']
+
+    # Symbol '.'
+    _RAW_DOT = ['00000000',
+                '00000000',
+                '00000000',
+                '00000000',
+                '00000000',
+                '00000011',
+                '00000011',
+                '00000000']
+
+    # Symbol '!'
+    _RAW_EXCLAIM = ['00000000',
+                    '00000000',
+                    '00000000',
+                    '00000000',
+                    '00000000',
+                    '11111011',
+                    '11111011',
+                    '00000000']
+
+    # Symbol '?'
+    _RAW_QUESTION = ['00000000',
+                     '00000000',
+                     '00000000',
+                     '01001000',
+                     '11101011',
+                     '10101011',
+                     '10111000',
+                     '00000000']
+
+    # Symbol ','
+    _RAW_COMMA = ['00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000000',
+                  '00000110',
+                  '00000111',
+                  '00000000']
+
+    # Symbol ';'
+    _RAW_SEMICOL = ['00000000'
+                    '00000000',
+                    '00000000',
+                    '00000000',
+                    '00000000',
+                    '00110110',
+                    '00110111',
+                    '00000000']
+
+
     def __init__(self):
         """ Init some parameters. """
-        self.transform_matrices()
+        self._transform_matrices()
+        self._build_translation_dict()
+
+    def _transform_matrices(self):
+        """ Transform all raw binary 'matrices' to input 'characters'
+            for the Adafruit I2C 8x8 LED backpack.
+        """
+
+        # Take each _RAW_xxx string input matrix and assign the
+        # corresponding numerical LED backpack matrix to the variable _xxx.
+        for varName in vars(MatrixChars).keys():
+            if varName.startswith('_RAW_') and (varName != '_RAW__'):
+                vars(MatrixChars)[varName[4:]] = self.matrix2led(
+                    eval('self.%s' % varName))
+
+    def _build_translation_dict(self):
+        """ Builds the translation dictionary
+            letter/symbol -> MatrixChars.
+        """
+        self.TRANSLATION = {
+            '.': self._DOT,
+            '!': self._EXCLAIM,
+            '?': self._QUESTION,
+            ',': self._COMMA,
+            ';': self._SEMICOL,
+        }
+
+        for i in range(65, 91):
+            self.TRANSLATION[chr(i)] = eval('self._%s' % chr(i))
 
     def row2led(self, _bin = None):
         """ Transforms a given binary string into an input row for the
@@ -72,17 +381,6 @@ class MatrixChars:
         for row in _bin:
             binList.append(self.row2led(row))
         return binList
-
-    def transform_matrices(self):
-        """ Transform all raw binary 'matrices' to input 'characters'
-            for the Adafruit I2C 8x8 LED backpack.
-        """
-
-        # Take each _RAW_xxx string input matrix and assign the
-        # corresponding numerical LED backpack matrix to the variable _xxx.
-        for varName in vars(MatrixChars).keys():
-            if varName.startswith('_RAW_') and (varName != '_RAW__'):
-                vars(MatrixChars)[varName[4:]] = self.matrix2led(eval(varName))
 
     def string2matrix(self, message):
         """ Convert a string message to an input stream for the LED
