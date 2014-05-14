@@ -7,7 +7,7 @@ from Adafruit_I2C import Adafruit_I2C
 # LEDBackpack Class
 # ============================================================================
 
-class LEDBackpack:
+class LEDBackpack(object):
     i2c = None
 
     # Registers
