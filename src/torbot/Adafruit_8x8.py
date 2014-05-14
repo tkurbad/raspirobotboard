@@ -6,7 +6,7 @@ from Adafruit_LEDBackpack import LEDBackpack
 # 8x8 Pixel Display
 # ===========================================================================
 
-class EightByEight:
+class EightByEight(object):
     disp = None
 
     def __init__(self, address = 0x70, debug=False):
