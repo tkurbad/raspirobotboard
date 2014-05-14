@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 
 from time import sleep
 
-from Adafruit_8x8 import EightByEight
+from EightByEight import EightByEight
 from ESpeak import ESpeak
 from Ranger import Ranger
 
