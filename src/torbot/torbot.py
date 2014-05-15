@@ -1,6 +1,8 @@
 #!/usr/bin/python2
+# -*- coding: latin-1 -*-
 
 import os.path
+import threading, Queue
 
 try:
     import RPi.GPIO as GPIO
@@ -442,7 +444,7 @@ class TorBot:
 
         if matrix:
             raw_input("Test LED Matrix output")
-            self.ledMatrix.display_string_scrolling('This is a test.',
+            self.ledMatrix.display_string_scrolling(u'This is a täst.',
                                                     turnaround = False)
             raw_input("Clear LED matrix")
             self.ledMatrix.clear()
@@ -452,3 +454,8 @@ class TorBot:
             self.speak("Hello, my name is Torbot. I am an autonomous robot.")
 
         raw_input("End of test")
+
+
+class TorBotThreadController(threading.Thread):
+    """ This class controls all of TorBot's threads. """
+    
