@@ -1,4 +1,5 @@
 #!/usr/bin/python2
+# -*- coding: latin-1 -*-
 
 from __future__ import print_function
 

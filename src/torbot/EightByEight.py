@@ -1,4 +1,5 @@
 #!/usr/bin/python2
+# -*- coding: latin-1 -*-
 
 from __future__ import print_function
 
@@ -61,6 +62,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
             print('WARNING: Parameter timeout has to be non-negative. Setting it to 1.',
                 file = sys.stderr)
 
+        message = u'%s'.encode('latin-1') % message
         if timeout == 0:
             self.display_char(message[0])
         else:
@@ -92,6 +94,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
             Otherwise, the display is cleared after displaying all of
             'message'.
         """
+        message = u'%s'.encode('latin-1') % message
         if not message:
             print('ERROR: Message is empty. Not displaying anything.',
                 file = sys.stderr)
@@ -103,7 +106,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
                 file = sys.stderr)
 
         outputList = []
-        for character in message:
+        for character in u'%s'.encode('latin-1') % message:
             outputList.extend(self.translate_char(character))
 
         if turnaround:
