@@ -1,5 +1,5 @@
 #!/usr/bin/python2
-# -*- coding: utf-8 -*-
+# -*- coding: latin-1 -*-
 
 
 class MatrixChars:
@@ -354,6 +354,26 @@ class MatrixChars:
                   '00000000',
                   '00000000']
 
+    # Symbol 'Smiley'
+    _RAW_SMILE = ['00011000',
+                  '00100100',
+                  '01101010',
+                  '10000101',
+                  '10000101',
+                  '01101010',
+                  '00100100',
+                  '00011000']
+
+    # Symbol 'Sad'
+    _RAW_SAD = ['00011000',
+                '00100100',
+                '01101010',
+                '10010001',
+                '10010001',
+                '01101010',
+                '00100100',
+                '00011000']
+
 
     def __init__(self):
         """ Init some parameters. """
@@ -377,13 +397,17 @@ class MatrixChars:
             letter/symbol -> MatrixChars.
         """
         self.TRANSLATION = {
-            '@': self._AT,
-            ',': self._COMMA,
-            '.': self._DOT,
-            '!': self._EXCLAIM,
-            '?': self._QUESTION,
-            ';': self._SEMICOL,
-            ' ': self._SPACE,
+            u'@': self._AT,
+            u',': self._COMMA,
+            u'.': self._DOT,
+            u'!': self._EXCLAIM,
+            u'?': self._QUESTION,
+            u';': self._SEMICOL,
+            u' ': self._SPACE,
+            u'Ä': self._A + self._E,
+            u'Ö': self._O + self._E,
+            u'Ü': self._U + self._E,
+            u'ß': self._S + self._S,
         }
 
         for i in range(65, 91):
