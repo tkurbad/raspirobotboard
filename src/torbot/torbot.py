@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: latin-1 -*-
 
+import locale
 import os.path
 import threading, Queue
 
@@ -49,6 +50,9 @@ except ImportError, e:
 from Ranger import Ranger
 
 ## Define some standard variables
+
+# Locale setup
+LOCALE              = 'de_DE'
 
 # Serial port setup
 USE_SERIAL          = True
@@ -109,7 +113,13 @@ class TorBot:
 
     def __init__(self):
         """ Initialize some parameters. """
-        
+
+        # Set locale
+        try:
+            locale.setlocale(locale.LC_CTYPE, LOCALE)
+        except locale.Error, e:
+            pass
+
         # Silence GPIO warnings
         GPIO.setwarnings(False)
 

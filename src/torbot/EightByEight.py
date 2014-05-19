@@ -10,6 +10,7 @@ import Adafruit_8x8
 
 from LEDMatrixChars import MatrixChars
 
+
 class EightByEight(Adafruit_8x8.EightByEight):
     """ Extend Adafruit's original EightByEight class to allow for easy
         displaying of string messages, characters and symbols.
