@@ -85,18 +85,21 @@ class EightByEight(Adafruit_8x8.EightByEight):
         if clear:
             self.clear()
 
-    def _scroll_by_one(self, outputList, timeout):
+    def _scroll_by_one(self, outputList, timeout, backwards = False):
         """ Helper method to scroll a list of matrix characters by one
             column.
         """
         self.write_matrix_raw(outputList[0:8])
-        outputList.append(outputList[0])
-        del(outputList[0])
+        nextColumn = 0
+        if not backwards:
+            nextColumn = 8
+        outputList.append(outputList[nextColumn])
+        del(outputList[nextColumn])
         sleep(timeout)
         return outputList
 
     def display_string_scrolling(self, message, timeout = 0.1,
-        turnaround = True):
+        turnaround = True, backwards = False):
         """ Displays the given message, scrolling it column by column.
 
             'timeout' defines the time between switching from one column
@@ -122,10 +125,14 @@ class EightByEight(Adafruit_8x8.EightByEight):
         for character in message:
             multibyte += character
             if character == u'\xc3':
-                import pdb; pdb.set_trace()
                 continue
-            outputList.extend(self.translate_char(multibyte))
+            outputChar = self.translate_char(multibyte)
+            if not backwards:
+                outputChar.reverse()
+            outputList.extend(outputChar)
             multibyte = u''
+        if not backwards:
+            outputList.reverse()
 
         if turnaround:
             # XXX: Think of proper condition to end this loop.
@@ -135,7 +142,9 @@ class EightByEight(Adafruit_8x8.EightByEight):
             numColumns = len(outputList)
             column = numColumns - 7
             while column > 0:
-                outputList = self._scroll_by_one(outputList, timeout)
+                outputList = self._scroll_by_one(outputList,
+                                                 timeout,
+                                                 backwards)
                 column -= 1
             sleep(1)
             self.clear()
