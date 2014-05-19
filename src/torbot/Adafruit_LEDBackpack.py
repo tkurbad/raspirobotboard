@@ -73,7 +73,7 @@ class LEDBackpack(object):
         bytes = []
         for item in self.__buffer:
             bytes.append(item & 0xFF)
-            bytes.append((item >> 8) & 0xFF)
+            bytes.append((item >> 7) & 0xFF)
         self.i2c.writeList(0x00, bytes)
 
     def clear(self, update=True):
