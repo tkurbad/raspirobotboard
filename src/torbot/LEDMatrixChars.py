@@ -422,9 +422,9 @@ class MatrixChars:
 
     def __init__(self, backwards = True):
         """ Init some parameters. """
+        self.BACKWARDS = backwards
         self._transform_matrices()
         self._build_translation_dict()
-        self.BACKWARDS = backwards
 
     def _transform_matrices(self):
         """ Transform all raw binary 'matrices' to input 'characters'
