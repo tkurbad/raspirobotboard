@@ -490,10 +490,6 @@ class MatrixChars:
                     matrix_row = u'%s%s' % (_row[7-index], matrix_row)
             matrix.append(matrix_row)
 
-        # For backwards display mirror.
-        if not self.BACKWARDS:
-            matrix.reverse()
-
         matrixList = []
         for row in matrix:
             matrixList.append(self.row2led(row))
