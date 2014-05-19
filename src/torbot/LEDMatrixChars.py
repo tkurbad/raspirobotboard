@@ -482,12 +482,12 @@ class MatrixChars:
         for index in range(8):
             matrix_row = u''
             for _row in _bin:
-                # Rotate the input matrix 90° CCW.
-                matrix_row = u'%s%s' % (_row[7-index], matrix_row)
-
-                # For backwards display turn 90° CW.
                 if self.BACKWARDS:
+                    # For backwards display rotate 90° CW.
                     matrix_row = u'%s%s' % (_row[index], matrix_row)
+                else:
+                    # Otherwise, rotate the input matrix 90° CCW.
+                    matrix_row = u'%s%s' % (_row[7-index], matrix_row)
             matrix.append(matrix_row)
 
         # For backwards display mirror.
