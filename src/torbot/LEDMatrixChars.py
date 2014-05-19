@@ -472,11 +472,11 @@ class MatrixChars:
             # Umlauts
             u'Ä': self._AE,
             u'ä': self._AE,
-            u'Ö': self._O + self._E,
-            u'ö': self._O + self._E,
-            u'Ü': self._U + self._E,
-            u'ü': self._U + self._E,
-            u'ß': self._S + self._S,
+            u'Ö': self._OE,
+            u'ö': self._OE,
+            u'Ü': self._UE,
+            u'ü': self._UE,
+            u'ß': self._SZ,
         }
 
         for i in range(65, 91):
