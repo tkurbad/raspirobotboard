@@ -104,7 +104,7 @@ ESPEAK_WORDGAP      = 1
 # Adafruit LED matrix
 USE_ADAFRUIT_8x8    = True
 ADAFRUIT_ADDRESS    = 0x70
-ADAFRUIT_BACKWARDS  = False  # Display backwards oriented?
+ADAFRUIT_BACKWARDS  = True  # Display backwards oriented?
 
 
 class TorBot:
@@ -449,23 +449,10 @@ class TorBot:
             self.power_odometers(False)
 
         if matrix:
-            raw_input("Test LED Matrix output (Letter A)")
-            #self.ledMatrix.display_string_scrolling(
-                #u'abcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVXYZÄÖÜ ,.!?;',
-                                                    #turnaround = False)
-            self.ledMatrix.display_char(u'A')
-            raw_input("Clear LED matrix")
-            self.ledMatrix.clear()
-            raw_input("Test LED Matrix output (Letter B)")
-            self.ledMatrix.display_char(u'B')
-            raw_input("Clear LED matrix")
-            self.ledMatrix.clear()
-            raw_input("Test LED Matrix output (Scroller)")
-            #self.ledMatrix.display_string_scrolling(
-                #u'abcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVXYZÄÖÜ ,.!?;',
-                                                    #turnaround = False)
-            self.ledMatrix.display_string_scrolling(u'ab',
-                                                    turnaround = False)
+            raw_input("Test LED Matrix output")
+            self.ledMatrix.display_string_scrolling(
+                u'abcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVXYZÄÖÜ ,.!?;:',
+                turnaround = False)
             raw_input("Clear LED matrix")
             self.ledMatrix.clear()
 
