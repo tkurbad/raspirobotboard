@@ -51,8 +51,9 @@ from Ranger import Ranger
 ## Define some standard variables
 
 # Serial port setup
+USE_SERIAL          = True
 SER_DEVICE          = '/dev/ttyAMA0'
-SER_BAUD           = 9600
+SER_BAUD            = 9600
 
 if not os.path.exists('/dev/ttyAMA0'):
     # Is this really a Raspberry PI?
