@@ -420,10 +420,11 @@ class MatrixChars:
                '00000011']
 
 
-    def __init__(self):
+    def __init__(self, backwards = True):
         """ Init some parameters. """
         self._transform_matrices()
         self._build_translation_dict()
+        self.BACKWARDS = backwards
 
     def _transform_matrices(self):
         """ Transform all raw binary 'matrices' to input 'characters'
@@ -477,13 +478,21 @@ class MatrixChars:
         """
         if _bin is None:
             return
-        # Mirror the input matrix and turn 90° CCW.
         matrix = []
         for index in range(8):
             matrix_row = u''
             for _row in _bin:
+                # Rotate the input matrix 90° CCW.
                 matrix_row = u'%s%s' % (_row[7-index], matrix_row)
+
+                # For backwards display turn 90° CW.
+                if self.BACKWARDS:
+                    matrix_row = u'%s%s' % (_row[index], matrix_row)
             matrix.append(matrix_row)
+
+        # For backwards display mirror.
+        if self.BACKWARDS:
+            matrix.reverse()
 
         matrixList = []
         for row in matrix:
