@@ -121,6 +121,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
         for character in message:
             multibyte += character
             if character == u'\xc3':
+                import pdb; pdb.set_trace()
                 continue
             outputList.extend(self.translate_char(multibyte))
             multibyte = u''
