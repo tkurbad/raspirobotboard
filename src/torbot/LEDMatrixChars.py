@@ -406,6 +406,7 @@ class MatrixChars:
             letter/symbol -> MatrixChars.
         """
         self.TRANSLATION = {
+            # Symbols
             u'@': self._AT,
             u',': self._COMMA,
             u'.': self._DOT,
@@ -413,6 +414,7 @@ class MatrixChars:
             u'?': self._QUESTION,
             u';': self._SEMICOL,
             u' ': self._SPACE,
+            # Umlauts
             u'\xc3\x84': self._A + self._E,
             u'\xc3\x96': self._O + self._E,
             u'\xc3\x9c': self._U + self._E,

@@ -57,17 +57,28 @@ class EightByEight(Adafruit_8x8.EightByEight):
             If clear is True, the matrix is cleared after
             displaying all of message.
         """
+        message = u'%s' % message
+        if not message:
+            print('ERROR: Message is empty. Not displaying anything.',
+                file = sys.stderr)
+            return False
+
         if timeout < 0:
             timeout = 1
             print('WARNING: Parameter timeout has to be non-negative. Setting it to 1.',
                 file = sys.stderr)
 
-        message = u'%s'.encode('latin-1') % message
         if timeout == 0:
             self.display_char(message[0])
         else:
+            multibyte = u''
             for character in message:
-                self.display_char(character)
+                multibyte += character
+                if character == u'\xc3':
+                    continue
+                outputList.extend(self.translate_char(multibyte))
+                self.display_char(multibyte)
+                multibyte = u''
                 sleep(timeout)
 
         if clear:
@@ -94,7 +105,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
             Otherwise, the display is cleared after displaying all of
             'message'.
         """
-        message = u'%s'.encode('latin-1') % message
+        message = u'%s' % message
         if not message:
             print('ERROR: Message is empty. Not displaying anything.',
                 file = sys.stderr)
@@ -106,8 +117,13 @@ class EightByEight(Adafruit_8x8.EightByEight):
                 file = sys.stderr)
 
         outputList = []
-        for character in u'%s'.encode('latin-1') % message:
-            outputList.extend(self.translate_char(character))
+        multibyte = u''
+        for character in message:
+            multibyte += character
+            if character == u'\xc3':
+                continue
+            outputList.extend(self.translate_char(multibyte))
+            multibyte = u''
 
         if turnaround:
             # XXX: Think of proper condition to end this loop.
