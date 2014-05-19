@@ -72,6 +72,8 @@ class LEDBackpack(object):
         "Updates the display memory"
         bytes = []
         for item in self.__buffer:
+            # Correct the apparent right-shift of (at least) the
+            # monochrome matrix
             item = ((item << 7) & 0xFF) + (item >> 1)
             bytes.append(item & 0xFF)
             bytes.append((item >> 8) & 0xFF)
