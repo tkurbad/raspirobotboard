@@ -416,6 +416,16 @@ class MatrixChars:
                   '00000000',
                   '00000000']
 
+    # Symbol 'Neutral'
+    _RAW_NEUTRAL = ['00111100',
+                    '01000010',
+                    '10100101',
+                    '10000001',
+                    '10000001',
+                    '10111101',
+                    '01000010',
+                    '00111100']
+
     # Symbol 'Smiley'
     _RAW_SMILE = ['00111100',
                   '01000010',
@@ -469,6 +479,9 @@ class MatrixChars:
             u'?': self._QUESTION,
             u';': self._SEMICOL,
             u' ': self._SPACE,
+            u':|': self._NEUTRAL,
+            u':)': self._SMILE,
+            u':(': self._SAD,
             # Umlauts
             u'Ä': self._AE,
             u'ä': self._AE,

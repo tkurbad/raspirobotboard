@@ -44,6 +44,51 @@ class EightByEight(Adafruit_8x8.EightByEight):
                                     character.upper()]
         return matrixCharacter
 
+    def translate_string(self, message):
+        """ Translate a string of characters to matrix output format.
+        """
+        message = u'%s' % message
+        if not message:
+            print('ERROR: Message is empty. Not displaying anything.',
+                file = sys.stderr)
+            return []
+
+        matrixList = []
+        multibyte = u''
+        for character in message:
+            outputChar = None
+            multibyte += character
+
+            # Umlauts
+            if multibyte == u'\xc3':
+                continue
+            # Symbols
+            if multibyte == u':':
+                # Could be a smiley
+                continue
+            if multibyte.startswith(u':') and (len(multibyte) == 2):
+                if not (multibyte.endswith(u')')
+                        or multibyte.endswith(u'(')
+                        or multibyte.endswith(u'|')):
+                    # Symbol is NOT smiley
+                    for character in multibyte:
+                        # Not a symbol, print out all characters
+                        outputChar = self.translate_char(character)
+                        if not self.matrixChars.BACKWARDS:
+                            outputChar.reverse()
+                        matrixList.append(outputChar)
+
+            # Normal output
+            if outputChar is None:
+                outputChar = self.translate_char(multibyte)
+                if not self.matrixChars.BACKWARDS:
+                    outputChar.reverse()
+                matrixList.extend(outputChar)
+            multibyte = u''
+        if not self.matrixChars.BACKWARDS:
+            matrixList.reverse()
+        return matrixList
+        
     def display_char(self, character):
         """ Display a single character. """
         matrixCharacter = self.translate_char(character)
@@ -58,30 +103,19 @@ class EightByEight(Adafruit_8x8.EightByEight):
             If clear is True, the matrix is cleared after
             displaying all of message.
         """
-        message = u'%s' % message
-        if not message:
-            print('ERROR: Message is empty. Not displaying anything.',
-                file = sys.stderr)
-            return False
-
         if timeout < 0:
             timeout = 1
             print('WARNING: Parameter timeout has to be non-negative. Setting it to 1.',
                 file = sys.stderr)
 
-        if timeout == 0:
-            self.display_char(message[0])
+        matrixList = self.translate_string(message)
+        if timeout == 0 and matrixList != []:
+            self.write_matrix_raw(matrixList[0])
         else:
-            multibyte = u''
-            for character in message:
-                multibyte += character
-                if character == u'\xc3':
-                    continue
-                outputList.extend(self.translate_char(multibyte))
-                self.display_char(multibyte)
-                multibyte = u''
+            matrixList = self.translate_string(message)
+            for matrixCharacter in matrixList:
+                self.write_matrix_raw(matrixCharacter)
                 sleep(timeout)
-
         if clear:
             self.clear()
 
@@ -103,7 +137,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
         return outputList
 
     def display_string_scrolling(self, message, timeout = 0.1,
-        turnaround = True, backwards = False):
+        turnaround = True, backwards = False, clear = True):
         """ Displays the given message, scrolling it column by column.
 
             'timeout' defines the time between switching from one column
@@ -113,30 +147,19 @@ class EightByEight(Adafruit_8x8.EightByEight):
             Otherwise, the display is cleared after displaying all of
             'message'.
         """
-        message = u'%s' % message
-        if not message:
-            print('ERROR: Message is empty. Not displaying anything.',
-                file = sys.stderr)
-            return False
 
         if timeout <= 0:
             timeout = 0.1
             print('WARNING: Parameter timeout has to be non-negative. Setting it to 0.1.',
                 file = sys.stderr)
 
+        matrixList = self.translate_string(message)
+        if matrixList == []:
+            return
+
         outputList = []
-        multibyte = u''
-        for character in message:
-            multibyte += character
-            if character == u'\xc3':
-                continue
-            outputChar = self.translate_char(multibyte)
-            if not self.matrixChars.BACKWARDS:
-                outputChar.reverse()
-            outputList.extend(outputChar)
-            multibyte = u''
-        if not self.matrixChars.BACKWARDS:
-            outputList.reverse()
+        for matrixCharacter in matrixList:
+            outputList.extend(matrixCharacter)
 
         if turnaround:
             # XXX: Think of proper condition to end this loop.
@@ -150,5 +173,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
                 outputList = self._scroll_by_one(outputList,
                                                  timeout)
                 column -= 1
-            sleep(1)
+
+        if clear:
+            sleep(timeout)
             self.clear()
