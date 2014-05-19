@@ -7,8 +7,8 @@ class MatrixChars:
         the LED matrix.
     """
 
-    ### Binary string matrices. Note that the symbols are rotated 90°
-    ### ccw.
+    ### Binary string matrices. Note that all symbols are mirrored and 
+    ### rotated 90° CCW.
     
     # Example
     _RAW__ = ['xxxxxxxx',
@@ -23,37 +23,46 @@ class MatrixChars:
     ## LETTERS
 
     # Letter 'A'
-    _RAW_A = ['00000000',
-              '00000011',
-              '00001111',
-              '00111110',
-              '11100110',
-              '00111110',
-              '00001111',
-              '00000011']
+    #_RAW_A = ['00000011',
+              #'00001111',
+              #'00111110',
+              #'11100110',
+              #'00111110',
+              #'00001111',
+              #'00000011',
+              #'00000000',]
+    _RAW_A = ['00010000',
+              '00111000',
+              '00111000',
+              '01101100',
+              '01101100',
+              '11111110',
+              '11000110',
+              '11000110',]
 
     # Letter 'B'
-    _RAW_B = ['00000000',
+    _RAW_B = ['11111111',
+              '11111111',
+              '11011011',
+              '11011011',
+              '11011011',
+              '11111111',
               '01100110',
-              '11111111',
-              '11011011',
-              '11011011',
-              '11011011',
-              '11111111',
-              '11111111']
+              '00000000',]
     
     # Letter 'C'
-    _RAW_C = ['00000000',
-              '01100110',
-              '11100111',
-              '11000011',
-              '11000011',
-              '11100111',
+    _RAW_C = ['00111100',
               '11111111',
-              '00111100']
+              '11100111',
+              '11000011',
+              '11000011',
+              '11100111',
+              '01100110',
+              '00000000',]
 
     # Letter 'D'
-    _RAW_D = ['00000000',
+    _RAW_D = [
+              '00000000',
               '01111110',
               '11100111',
               '11000011',
@@ -460,10 +469,18 @@ class MatrixChars:
         """
         if _bin is None:
             return
-        binList = []
-        for row in _bin:
-            binList.append(self.row2led(row))
-        return binList
+        # Mirror the input matrix and turn 90° CCW.
+        matrix = []
+        for index in range(8):
+            matrix_row = u''
+            for _row in _bin:
+                matrix_row = u'%s%s' % (_row[index], matrix_row)
+            matrix.append(matrix_row)
+
+        matrixList = []
+        for row in matrix:
+            matrixList.append(self.row2led(row))
+        return matrixList
 
     def message2matrix(self, message):
         """ Convert a string message to an input stream for the LED
