@@ -16,10 +16,10 @@ class EightByEight(Adafruit_8x8.EightByEight):
         displaying of string messages, characters and symbols.
     """
 
-    def __init__(self, address = 0x70, debug = False):
+    def __init__(self, address = 0x70, debug = False, backwards = True):
         """ Initialize the LED matrix. """
         super(EightByEight, self).__init__(address = address, debug = debug)
-        self.matrixChars = MatrixChars()
+        self.matrixChars = MatrixChars(backwards)
 
     def write_matrix_raw(self, matrixCharacter):
         """ Display a whole set of encoded matrix data, i.e. one symbol,

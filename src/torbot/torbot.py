@@ -104,6 +104,7 @@ ESPEAK_WORDGAP      = 1
 # Adafruit LED matrix
 USE_ADAFRUIT_8x8    = True
 ADAFRUIT_ADDRESS    = 0x70
+ADAFRUIT_BACKWARDS  = True  # Display backwards oriented?
 
 
 class TorBot:
@@ -166,7 +167,8 @@ class TorBot:
                                 wordgap = ESPEAK_WORDGAP)
 
         if USE_ADAFRUIT_8x8:
-            self.ledMatrix = EightByEight(address=ADAFRUIT_ADDRESS)
+            self.ledMatrix = EightByEight(address = ADAFRUIT_ADDRESS,
+                                        backwards = ADAFRUIT_BACKWARDS)
             self.ledMatrix.clear()
 
     ## motor control ###################################################
