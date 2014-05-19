@@ -484,7 +484,7 @@ class MatrixChars:
             for _row in _bin:
                 if self.BACKWARDS:
                     # For backwards display rotate 90° CW.
-                    matrix_row = u'%s%s' % (_row[index], matrix_row)
+                    matrix_row = u'%s%s' % (matrix_row, _row[index])
                 else:
                     # Otherwise, rotate the input matrix 90° CCW.
                     matrix_row = u'%s%s' % (_row[7-index], matrix_row)
