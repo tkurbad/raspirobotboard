@@ -415,10 +415,10 @@ class MatrixChars:
             u';': self._SEMICOL,
             u' ': self._SPACE,
             # Umlauts
-            u'\xc3\x84': self._A + self._E,
-            u'\xc3\x96': self._O + self._E,
-            u'\xc3\x9c': self._U + self._E,
-            u'\xc3\x9f': self._S + self._S,
+            u'Ä': self._A + self._E,
+            u'Ö': self._O + self._E,
+            u'Ü': self._U + self._E,
+            u'ß': self._S + self._S,
         }
 
         for i in range(65, 91):
