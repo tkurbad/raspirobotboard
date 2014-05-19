@@ -137,7 +137,9 @@ class EightByEight(Adafruit_8x8.EightByEight):
         if turnaround:
             # XXX: Think of proper condition to end this loop.
             while True:
-                outputList = self._scroll_by_one(outputList, timeout)
+                outputList = self._scroll_by_one(outputList,
+                                                 timeout,
+                                                 backwards)
         else:
             numColumns = len(outputList)
             column = numColumns - 7
