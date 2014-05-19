@@ -32,7 +32,7 @@ class EightByEight(object):
             return
         if (y >= 8):
             return
-        x += 7
+        #x += 7
         x %= 8
         # Set the appropriate pixel
         buffer = self.disp.getBuffer()
