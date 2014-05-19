@@ -74,7 +74,7 @@ class LEDBackpack(object):
         for item in self.__buffer:
             bytes.append(item & 0xFF)
             bytes.append((item >> 8) & 0xFF)
-        self.i2c.writeList(0x00, bytes[-2:] + bytes[:-2])
+        self.i2c.writeList(0x00, bytes)
 
     def clear(self, update=True):
         "Clears the display memory"
