@@ -451,7 +451,7 @@ class TorBot:
         if matrix:
             raw_input("Test LED Matrix output")
             self.ledMatrix.display_string_scrolling(
-                u'abcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ ,.!?;:',
+                u'abcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ ,.!?;::):(:|',
                 turnaround = False)
             raw_input("Clear LED matrix")
             self.ledMatrix.clear()

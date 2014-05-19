@@ -66,10 +66,20 @@ class EightByEight(Adafruit_8x8.EightByEight):
             if multibyte == u':':
                 # Could be a smiley
                 continue
+
             if multibyte.startswith(u':') and (len(multibyte) == 2):
                 if not (multibyte.endswith(u')')
                         or multibyte.endswith(u'(')
                         or multibyte.endswith(u'|')):
+                    if multibyte.endswith(u':'):
+                        # Could still be a smiley behind a colon
+                        multibyte = u':'
+                        outputChar = self.translate_char(multibyte)
+                        if not self.matrixChars.BACKWARDS:
+                            outputChar.reverse()
+                        matrixList.append(outputChar)
+                        continue
+
                     # Symbol is NOT smiley
                     for character in multibyte:
                         # Not a symbol, print out all characters
@@ -83,7 +93,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
                 outputChar = self.translate_char(multibyte)
                 if not self.matrixChars.BACKWARDS:
                     outputChar.reverse()
-                matrixList.extend(outputChar)
+                matrixList.append(outputChar)
             multibyte = u''
         if not self.matrixChars.BACKWARDS:
             matrixList.reverse()
