@@ -428,7 +428,8 @@ class MatrixChars:
         """
         if _bin is None:
             return
-        return int(_bin[7] + _bin[0:7], 2)
+        #return int(_bin[7] + _bin[0:7], 2)
+        return int(_bin, 2)
 
     def matrix2led(self, _bin = None):
         """ Transform a raw binary 'matrix' to input for the Adafruit I2C
