@@ -212,6 +212,15 @@ class MatrixChars:
               '11110011',
               '01100110']
 
+    _RAW_S = ['00000000',
+              '01100110',
+              '11001111',
+              '11001111',
+              '11011011',
+              '11110011',
+              '11110011',
+              '01100110']
+
     # Letter 'T'
     _RAW_T = ['00000000',
               '00000000',
@@ -404,10 +413,10 @@ class MatrixChars:
             u'?': self._QUESTION,
             u';': self._SEMICOL,
             u' ': self._SPACE,
-            u'Ä': self._A + self._E,
-            u'Ö': self._O + self._E,
-            u'Ü': self._U + self._E,
-            u'ß': self._S + self._S,
+            u'\xc3\x84': self._A + self._E,
+            u'\xc3\x96': self._O + self._E,
+            u'\xc3\x9c': self._U + self._E,
+            u'\xc3\x9f': self._S + self._S,
         }
 
         for i in range(65, 91):
