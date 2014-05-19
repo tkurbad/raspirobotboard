@@ -33,7 +33,7 @@ class EightByEight(object):
         if (y >= 8):
             return
         # XXX: Test, if x+= 8 works right
-        #x += 7   # ATTN: This might be a bug?  On the color matrix, this causes x=0 to draw on the last line instead of the first.
+        x += 8   # ATTN: This might be a bug?  On the color matrix, this causes x=0 to draw on the last line instead of the first.
         x %= 8
         # Set the appropriate pixel
         buffer = self.disp.getBuffer()
