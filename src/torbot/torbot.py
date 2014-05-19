@@ -1,7 +1,6 @@
 #!/usr/bin/python2
 # -*- coding: latin-1 -*-
 
-import locale
 import os.path
 import threading, Queue
 
@@ -113,12 +112,6 @@ class TorBot:
 
     def __init__(self):
         """ Initialize some parameters. """
-
-        # Set locale
-        try:
-            locale.setlocale(locale.LC_CTYPE, LOCALE)
-        except locale.Error, e:
-            pass
 
         # Silence GPIO warnings
         GPIO.setwarnings(False)
@@ -455,7 +448,8 @@ class TorBot:
 
         if matrix:
             raw_input("Test LED Matrix output")
-            self.ledMatrix.display_string_scrolling(u'This is a täst.',
+            self.ledMatrix.display_string_scrolling(
+                u'abcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVXYZÄÖÜ ,.!?;',
                                                     turnaround = False)
             raw_input("Clear LED matrix")
             self.ledMatrix.clear()

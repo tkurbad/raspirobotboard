@@ -25,11 +25,11 @@ class MatrixChars:
     # Letter 'A'
     _RAW_A = ['00000000',
               '00000011',
-              '00001110',
+              '00001111',
               '00111110',
               '11100110',
               '00111110',
-              '00001110',
+              '00001111',
               '00000011']
 
     # Letter 'B'
@@ -220,6 +220,14 @@ class MatrixChars:
               '11110011',
               '11110011',
               '01100110']
+    _RAW_S = ['00000000',
+              '01100110',
+              '11110011',
+              '11110011',
+              '11011011',
+              '11001111',
+              '11001111',
+              '01100110']
 
     # Letter 'T'
     _RAW_T = ['00000000',
@@ -384,6 +392,17 @@ class MatrixChars:
                 '00011000']
 
 
+    ## German Umlauts
+    _RAW_AE = ['00000000',
+               '00000011',
+               '10001111',
+               '00111110',
+               '11100110',
+               '00111110',
+               '10001111',
+               '00000011']
+
+
     def __init__(self):
         """ Init some parameters. """
         self._transform_matrices()
@@ -415,9 +434,12 @@ class MatrixChars:
             u';': self._SEMICOL,
             u' ': self._SPACE,
             # Umlauts
-            u'Ä': self._A + self._E,
+            u'Ä': self._AE,
+            u'ä': self._AE,
             u'Ö': self._O + self._E,
+            u'ö': self._O + self._E,
             u'Ü': self._U + self._E,
+            u'ü': self._U + self._E,
             u'ß': self._S + self._S,
         }
 
