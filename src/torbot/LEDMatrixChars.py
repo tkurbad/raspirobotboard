@@ -461,7 +461,6 @@ class MatrixChars:
         # corresponding numerical LED backpack matrix to the variable _xxx.
         for varName in vars(MatrixChars).keys():
             if varName.startswith('_RAW_') and (varName != '_RAW__'):
-                print varName, varName[4:]
                 vars(MatrixChars)[varName[4:]] = self.matrix2led(
                     eval('self.%s' % varName))
 

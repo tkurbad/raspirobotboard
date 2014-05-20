@@ -19,7 +19,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
     def __init__(self, address = 0x70, debug = False, backwards = True):
         """ Initialize the LED matrix. """
         super(EightByEight, self).__init__(address = address, debug = debug)
-        self.matrixChars = MatrixChars(backwards)
+        self.matrixChars = MatrixChars(backwards = backwards)
 
     def write_matrix_raw(self, matrixCharacter):
         """ Display a whole set of encoded matrix data, i.e. one symbol,
