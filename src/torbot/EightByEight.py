@@ -75,8 +75,6 @@ class EightByEight(Adafruit_8x8.EightByEight):
                         # Could still be a smiley behind a colon
                         multibyte = u':'
                         outputChar = self.translate_char(multibyte)
-                        if not self.matrixChars.BACKWARDS:
-                            outputChar.reverse()
                         matrixList.append(outputChar)
                         continue
 
@@ -84,8 +82,6 @@ class EightByEight(Adafruit_8x8.EightByEight):
                     for character in multibyte:
                         # Not a symbol, print out all characters
                         outputChar = self.translate_char(character)
-                        if not self.matrixChars.BACKWARDS:
-                            outputChar.reverse()
                         matrixList.append(outputChar)
 
             # Normal output
