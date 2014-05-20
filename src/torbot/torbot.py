@@ -104,7 +104,7 @@ ESPEAK_WORDGAP      = 1
 # Adafruit LED matrix
 USE_ADAFRUIT_8x8    = True
 ADAFRUIT_ADDRESS    = 0x70
-ADAFRUIT_BACKWARDS  = False  # Display backwards oriented?
+ADAFRUIT_BACKWARDS  = True  # Display backwards oriented?
 
 
 class TorBot:
