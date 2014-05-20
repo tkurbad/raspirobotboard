@@ -78,18 +78,23 @@ class EightByEight(Adafruit_8x8.EightByEight):
                         matrixList.append(outputChar)
                         continue
 
-                    # Symbol is NOT smiley
+                    ## Symbol is NOT a smiley
+
+                    # Is it an umlaut?
+                    if multibyte.endswith(u'\xc3'):
+                        multibyte = u'\xc3'
+                        continue
+                        
+                    # It's just "normal" characters
                     for character in multibyte:
-                        # Not a symbol, print out all characters
+                        # Not a symbol, not an umlaut. Just append all
+                        # characters individually.
                         outputChar = self.translate_char(character)
                         matrixList.append(outputChar)
 
-            # Normal output
+            # Normal character output
             if outputChar is None:
                 outputChar = self.translate_char(multibyte)
-#                if ((not self.matrixChars.BACKWARDS) and
-#                    (ord(multibyte[0].upper()) in range(65,91))):
-#                    outputChar.reverse()
                 matrixList.append(outputChar)
             multibyte = u''
         if not self.matrixChars.BACKWARDS:
