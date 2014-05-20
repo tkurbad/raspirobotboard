@@ -453,7 +453,6 @@ class TorBot:
             self.ledMatrix.display_string_scrolling(
                 u':ßabcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ ,.!?;::):(:|',
                 turnaround = False)
-            self.ledMatrix.display_char(u'ß')
             raw_input("Clear LED matrix")
             self.ledMatrix.clear()
 
