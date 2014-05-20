@@ -101,6 +101,8 @@ class EightByEight(Adafruit_8x8.EightByEight):
         
     def display_char(self, character):
         """ Display a single character. """
+        if not character:
+            return
         matrixCharacter = self.translate_char(character)
         self.write_matrix_raw(matrixCharacter)
 
