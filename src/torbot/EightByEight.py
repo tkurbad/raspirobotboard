@@ -91,7 +91,8 @@ class EightByEight(Adafruit_8x8.EightByEight):
             # Normal output
             if outputChar is None:
                 outputChar = self.translate_char(multibyte)
-                if (not self.matrixChars.BACKWARDS) and (len(multibyte) < 2):
+                if (not self.matrixChars.BACKWARDS and
+                    not multibyte.startswith(u'\xc3')):
                     outputChar.reverse()
                 matrixList.append(outputChar)
             multibyte = u''
