@@ -48,6 +48,8 @@ Source for the TorBot robot platform Python library.
 
 ---
 
+####See INSTALL.txt for further information
+
 All credits go to Simon Monk. For the original ReadMe of his
 raspirobotboard project, see below.
 
