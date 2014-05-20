@@ -190,7 +190,7 @@ class MatrixChars:
               '11000110',
               '11101110',
               '01111100',
-              '00111110']
+              '00110110']
 
     # Letter 'R'
     _RAW_R = ['11111000',
@@ -457,11 +457,11 @@ class MatrixChars:
         """ Transform all raw binary 'matrices' to input 'characters'
             for the Adafruit I2C 8x8 LED backpack.
         """
-
         # Take each _RAW_xxx string input matrix and assign the
         # corresponding numerical LED backpack matrix to the variable _xxx.
         for varName in vars(MatrixChars).keys():
             if varName.startswith('_RAW_') and (varName != '_RAW__'):
+                print varName, varName[4:]
                 vars(MatrixChars)[varName[4:]] = self.matrix2led(
                     eval('self.%s' % varName))
 
