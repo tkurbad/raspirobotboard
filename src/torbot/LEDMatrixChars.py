@@ -463,7 +463,7 @@ class MatrixChars:
             if varName.startswith('_RAW_') and (varName != '_RAW__'):
                 is_letter = False
                 if ((len(varName[5:]) == 1)
-                    and (ord(varName[5:]) in range(65, 91)):
+                    and (ord(varName[5:]) in range(65, 91))):
                     is_letter = True
                 vars(MatrixChars)[varName[4:]] = self.matrix2led(
                     eval('self.%s' % varName), is_letter)
