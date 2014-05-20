@@ -461,8 +461,12 @@ class MatrixChars:
         # corresponding numerical LED backpack matrix to the variable _xxx.
         for varName in vars(MatrixChars).keys():
             if varName.startswith('_RAW_') and (varName != '_RAW__'):
+                is_letter = False
+                if ((len(varName[5:]) == 1)
+                    and (ord(varName[5:]) in range(65, 91)):
+                    is_letter = True
                 vars(MatrixChars)[varName[4:]] = self.matrix2led(
-                    eval('self.%s' % varName))
+                    eval('self.%s' % varName), is_letter)
 
     def _build_translation_dict(self):
         """ Builds the translation dictionary
@@ -502,7 +506,7 @@ class MatrixChars:
             return
         return int(_bin, 2)
 
-    def matrix2led(self, _bin = None):
+    def matrix2led(self, _bin = None, is_letter = False):
         """ Transform a raw binary 'matrix' to input for the Adafruit I2C
             8x8 LED backpack.
         """
@@ -523,6 +527,8 @@ class MatrixChars:
         matrixList = []
         for row in matrix:
             matrixList.append(self.row2led(row))
+        if not self.BACKWARDS and is_letter:
+            matrixList.reverse()
         return matrixList
 
     def message2matrix(self, message):
