@@ -103,11 +103,11 @@ class EightByEight(Adafruit_8x8.EightByEight):
             outputList.append(outputList[0])
             del(outputList[0])
         else:
-            self.write_matrix_raw(outputList[-8:])
             outputList.reverse()
             outputList.append(outputList[0])
-            del(outputList[0])
             outputList.reverse()
+            self.write_matrix_raw(outputList[-8:])
+            del(outputList[-1])
         sleep(timeout)
         return outputList
 
