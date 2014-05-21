@@ -26,12 +26,16 @@ if [ -z "$JACKD_OPTIONS" ]; then
 	JACKD_OPTIONS="-d alsa"
 fi
 
+export JACK_PROMISCUOUS_SERVER=""
+
 case $1 in
 	start)
 		log_daemon_msg "Starting JACK audio connection kit daemon" "jackd"
   		start-stop-daemon --start --quiet --oknodo --pidfile $PIDFILE \
 			--background --make-pidfile --startas $DAEMON -- ${JACKD_OPTIONS}
 		status=$?
+		sleep 5
+		chmod 1777 /dev/shm/jack_default_0_0
 		log_end_msg $status
   		;;
 	stop)
