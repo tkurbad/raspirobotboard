@@ -784,7 +784,7 @@ class MatrixChars:
             u';': self._SEMICOL,
             u'/': self._SLASH,
             u' ': self._SPACE,
-            u'~': self._TILDE
+            u'~': self._TILDE,
             u'_': self._UNDER,
             # Smileys
             u':|': self._NEUTRAL,
