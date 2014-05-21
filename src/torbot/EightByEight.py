@@ -54,7 +54,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
 
         charList = self.matrixChars.FINDALL.findall(message)
         matrixList = []
-        
+
         for character in charList:
             if character:
                 matrixList.append(self.translate_char(character))
