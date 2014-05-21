@@ -103,7 +103,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
             outputList.append(outputList[0])
             del(outputList[0])
         else:
-            self.write_matrix_raw(outputList[-7:])
+            self.write_matrix_raw(outputList[-8:])
             outputList.reverse()
             outputList.append(outputList[0])
             del(outputList[0])
@@ -143,7 +143,7 @@ class EightByEight(Adafruit_8x8.EightByEight):
                                                  timeout)
         else:
             numColumns = len(outputList)
-            column = numColumns - 7
+            column = numColumns - 8
             while column > 0:
                 outputList = self._scroll_by_one(outputList,
                                                  timeout)
