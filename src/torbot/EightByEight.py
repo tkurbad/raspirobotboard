@@ -99,15 +99,15 @@ class EightByEight(Adafruit_8x8.EightByEight):
             column.
         """
         if self.matrixChars.BACKWARDS:
-            self.write_matrix_raw(outputList[0:8])
+            self.write_matrix_raw(outputList[:8])
             outputList.append(outputList[0])
             del(outputList[0])
         else:
+            self.write_matrix_raw(outputList[-8:])
             outputList.reverse()
             outputList.append(outputList[0])
+            del(outputList[0])
             outputList.reverse()
-            self.write_matrix_raw(outputList[-8:])
-            del(outputList[-1])
         sleep(timeout)
         return outputList
 
@@ -142,12 +142,11 @@ class EightByEight(Adafruit_8x8.EightByEight):
                 outputList = self._scroll_by_one(outputList,
                                                  timeout)
         else:
-            numColumns = len(outputList)
-            column = numColumns - 8
-            while column > 0:
+            column = len(outputList)
+            while column > 7:
+                column -= 1
                 outputList = self._scroll_by_one(outputList,
                                                  timeout)
-                column -= 1
 
         if clear:
             sleep(timeout)
