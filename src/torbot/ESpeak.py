@@ -29,11 +29,11 @@ class ESpeak:
             uid = os.getuid()
             jackdSockUser = os.path.join(
                 os.sep, 'dev', 'shm', 'jack_default_%d_0' % uid)
-                try:
-                    os.symlink(jackdSock, jackdSockUser)
-                except OSError, e:
-                    if e.errno != errno.EEXIST:   # Symlink exists
-                        raise
+            try:
+                os.symlink(jackdSock, jackdSockUser)
+            except OSError, e:
+                if e.errno != errno.EEXIST:   # Symlink exists
+                    raise
 
     def get_parameters(self):
         """ Return a dictionary of current espeak parameters. """
