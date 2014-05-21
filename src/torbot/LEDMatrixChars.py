@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: latin-1 -*-
 
+import re
 
 class MatrixChars:
     """ Class that holds all the characters and symbols to display on
@@ -18,6 +19,8 @@ class MatrixChars:
               'xxxxxxxx',
               'xxxxxxxx',
               'xxxxxxxx']
+
+    ## NUMBERS
 
     ## LETTERS
 
@@ -445,6 +448,12 @@ class MatrixChars:
                 '10100101',
                 '01000010',
                 '00111100']
+
+
+    # Regular expression pattern to find all defined numbers, letters,
+    # and symbols in a given string.
+    FINDALL = re.compile(
+        r'\xc3.|:[\(\)\|\/]|:(?![\(\)\|\/])|[@,\!\.\?; a-zA-Z0-9]')
 
 
     def __init__(self, backwards = True):

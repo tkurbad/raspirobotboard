@@ -47,58 +47,17 @@ class EightByEight(Adafruit_8x8.EightByEight):
     def translate_string(self, message):
         """ Translate a string of characters to matrix output format.
         """
-        message = u'%s' % message
         if not message:
             print('ERROR: Message is empty. Not displaying anything.',
                 file = sys.stderr)
             return []
 
+        charList = self.matrixChars.FINDALL.findall(message)
         matrixList = []
-        multibyte = u''
-        for character in message:
-            outputChar = None
-            multibyte += character
-
-            # Umlauts
-            if multibyte == u'\xc3':
-                continue
-            # Symbols
-            if multibyte == u':':
-                # Could be a smiley
-                continue
-
-            if multibyte.startswith(u':') and (len(multibyte) == 2):
-                if not (multibyte.endswith(u')')
-                        or multibyte.endswith(u'(')
-                        or multibyte.endswith(u'|')):
-                    if multibyte.endswith(u':'):
-                        # Could still be a smiley behind a colon
-                        multibyte = u':'
-                        outputChar = self.translate_char(multibyte)
-                        matrixList.append(outputChar)
-                        continue
-
-                    ## Symbol is NOT a smiley
-
-                    # Is the next character an umlaut?
-                    if multibyte.endswith(u'\xc3'):
-                        matrixList.append(self.translate_char(multibyte[0]))
-                        multibyte = multibyte[-1:]
-                        continue
-                        
-                    # Or is multibyte just a string of "normal"
-                    # characters?
-                    for character in multibyte:
-                        # Not a symbol, not an umlaut. Just append all
-                        # characters individually.
-                        outputChar = self.translate_char(character)
-                        matrixList.append(outputChar)
-
-            # Normal character output
-            if outputChar is None:
-                outputChar = self.translate_char(multibyte)
-                matrixList.append(outputChar)
-            multibyte = u''
+        
+        for character in charList:
+            if character:
+                matrixList.append(self.translate_char(character))
         if not self.matrixChars.BACKWARDS:
             matrixList.reverse()
         return matrixList
