@@ -3,6 +3,8 @@
 
 from __future__ import print_function
 
+import errno
+import os
 import sys
 
 from espeak import core, espeak
@@ -21,6 +23,17 @@ class ESpeak:
                             pitch = pitch, punctuation = punctuation,
                             rate = rate, volume = volume,
                             wordgap = wordgap)
+        # Try to enable output via system wide jackd instance
+        jackdSock = os.path.join(os.sep, 'dev', 'shm', 'jack_default_0_0')
+        if os.path.exists(jackdSock) and os.access(jackdSock, os.R_OK | os.W_OK):
+            uid = os.getuid()
+            jackdSockUser = os.path.join(
+                os.sep, 'dev', 'shm', 'jack_default_%d_0' % uid)
+                try:
+                    os.symlink(jackdSock, jackdSockUser)
+                except OSError, e:
+                    if e.errno != errno.EEXIST:   # Symlink exists
+                        raise
 
     def get_parameters(self):
         """ Return a dictionary of current espeak parameters. """
@@ -32,7 +45,6 @@ class ESpeak:
                 rate = espeak.get_parameter(core.parameter_RATE),
                 volume = espeak.get_parameter(core.parameter_VOLUME),
                 wordgap = espeak.get_parameter(core.parameter_WORDGAP))
-
             
     def set_parameters(self, voice = None, capitals = None, pitch = None,
                     punctuation = None, rate = None, volume = None,
