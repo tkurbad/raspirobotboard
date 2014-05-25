@@ -17,7 +17,7 @@ class Ranger:
                         stopbits = 2)
         self.rAddr = rangerAddress
 
-    def _send_receive(self, command, lenResult = 2, delay = 0.07, openSer = True):
+    def _send_receive(self, command, lenResult = 2, delay = 0.1, openSer = True):
         """ Helper method to send a command to the ranger and return the
             answer of the device. """
         result = None
