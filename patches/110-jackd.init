@@ -34,7 +34,7 @@ case $1 in
   		start-stop-daemon --start --quiet --oknodo --pidfile $PIDFILE \
 			--background --make-pidfile --startas $DAEMON -- ${JACKD_OPTIONS}
 		status=$?
-		sleep 5
+		sleep 8
 		chmod 1777 /dev/shm/jack_default_0_0
 		log_end_msg $status
   		;;
