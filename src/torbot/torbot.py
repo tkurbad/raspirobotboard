@@ -218,6 +218,8 @@ class TorBot:
 
         if USE_CAMERA:
             self.camera = PiCamera()
+            if not self.camera.camPresent:
+                USE_CAMERA = False
 
     ## motor control ###################################################
 
@@ -402,7 +404,7 @@ class TorBot:
 
     def test(self, motors = True, leds = True, rangers = True,
             switches = True, opencollectors = True, odometers = True,
-            matrix = True, speech = True):
+            matrix = True, speech = True, camera = True):
         """ Interactively test various functions of the robot board. """
         if motors:
             if odometers and USE_ODOMETERS:
@@ -516,7 +518,7 @@ class TorBot:
             raw_input("Test speech")
             self.speak("Hello, my name is Torbot. I am an autonomous robot.")
 
-        if camera:
+        if camera and USE_CAMERA:
             raw_input("Test camera")
             self.camera.close()
 
