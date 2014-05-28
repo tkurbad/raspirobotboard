@@ -46,6 +46,12 @@ try:
 except ImportError, e:
     USE_ESPEAK = False
 
+try:
+    from PiCamera import PiCamera
+    USE_CAMERA = True
+except ImportError, e:
+    USE_CAMERA = False
+
 from Ranger import Ranger
 
 ## Define some standard variables
@@ -65,16 +71,23 @@ if not os.path.exists('/dev/ttyAMA0'):
     SER_BAUD        = 115200
 
 # SRF02 range finder addresses
-FRONT_RANGER_ADDR   = 3
-BACK_RANGER_ADDR    = None
+FRONT_RANGER_ADDR   = 5
+DOWN_RANGER_ADDR    = 4
+BACK_RANGER_ADDR    = 3
 LEFT_RANGER_ADDR    = 2
 RIGHT_RANGER_ADDR   = 1
 
 # GPIO setup - motors
-LEFT_GO_PIN         = 17
-LEFT_DIR_PIN        = 4
-RIGHT_GO_PIN        = 10
-RIGHT_DIR_PIN       = 25
+# !NOTE! TorBot works better "backwards", thus left and right have been
+# switched.
+#LEFT_GO_PIN         = 17
+#LEFT_DIR_PIN        = 4
+#RIGHT_GO_PIN        = 10
+#RIGHT_DIR_PIN       = 25
+LEFT_GO_PIN         = 10
+LEFT_DIR_PIN        = 25
+RIGHT_GO_PIN        = 17
+RIGHT_DIR_PIN       = 4
 
 # GPIO setup - LEDs
 LED1_PIN            = 7
@@ -106,6 +119,33 @@ USE_ADAFRUIT_8x8    = True
 ADAFRUIT_ADDRESS    = 0x70
 ADAFRUIT_BACKWARDS  = False  # Display backwards oriented?
 
+## Raspberry PI Camera module
+# Resolution and frame rate
+CAM_CROP            = (0.0, 0.0, 1.0, 1.0)
+CAM_RESOLUTION      = (1920, 1080)
+CAM_FRAMERATE       = 20
+
+# Picture settings
+CAM_BRIGHTNESS      = 50
+CAM_CONTRAST        = 0
+CAM_SATURATION      = 0
+
+# Exposure settings
+CAM_AWB_MODE        = 'auto'
+CAM_EXPOSURE_COMPENSATION   = 0
+CAM_EXPOSURE_MODE   = 'auto'
+CAM_ISO             = 0
+CAM_METER_MODE      = 'average'
+
+# Effect settings
+CAM_IMAGE_EFFECT    = 'none'
+CAM_COLOR_EFFECTS   = None
+
+# Camera upside down?
+CAM_ROTATION        = 0
+CAM_HFLIP           = False
+CAM_VFLIP           = False
+
 
 class TorBot:
     """ Control the TorBot robot platform using Python on a
@@ -136,12 +176,17 @@ class TorBot:
         GPIO.setup(SW2_PIN, GPIO.IN, pull_up_down = pud)
 
         self.fRanger = None
+        self.dRanger = None
         self.bRanger = None
         self.lRanger = None
         self.rRanger = None
 
         if FRONT_RANGER_ADDR is not None:
             self.fRanger = Ranger(rangerAddress = FRONT_RANGER_ADDR,
+                                serDevice = SER_DEVICE,
+                                baud = SER_BAUD)
+        if DOWN_RANGER_ADDR is not None:
+            self.dRanger = Ranger(rangerAddress = DOWN_RANGER_ADDR,
                                 serDevice = SER_DEVICE,
                                 baud = SER_BAUD)
         if BACK_RANGER_ADDR is not None:
@@ -171,6 +216,9 @@ class TorBot:
                                         backwards = ADAFRUIT_BACKWARDS)
             self.ledMatrix.clear()
 
+        if USE_CAMERA:
+            self.camera = PiCamera()
+
     ## motor control ###################################################
 
     def set_motors(self, leftGo = 0, leftDir = 0,
@@ -187,14 +235,14 @@ class TorBot:
 
     def forward(self, seconds = 0):
         """ Move forward [for seconds]. """
-        self.set_motors(1, 0, 1, 0)
+        self.set_motors(1, 1, 1, 1)
         if seconds > 0:
             sleep(seconds)
             self.stop()
  
     def reverse(self, seconds = 0):
         """ Move backward [for seconds]. """
-        self.set_motors(1, 1, 1, 1)
+        self.set_motors(1, 0, 1, 0)
         if seconds > 0:
             sleep(seconds)
             self.stop()
@@ -204,7 +252,7 @@ class TorBot:
             Left motor: stop
             Right motor: forward
         """
-        self.set_motors(0, 0, 1, 0)
+        self.set_motors(0, 0, 1, 1)
         if seconds > 0:
             sleep(seconds)
             self.stop()
@@ -214,7 +262,7 @@ class TorBot:
             Left motor: forward
             Right motor: stop
         """
-        self.set_motors(1, 0, 0, 0)
+        self.set_motors(1, 1, 0, 0)
         if seconds > 0:
             sleep(seconds)
             self.stop()
@@ -224,7 +272,7 @@ class TorBot:
             Left motor: reverse
             Right motor: forward
         """
-        self.set_motors(1, 1, 1, 0)
+        self.set_motors(1, 0, 1, 1)
         if seconds > 0:
             sleep(seconds)
             self.stop()
@@ -234,7 +282,7 @@ class TorBot:
             Left motor: forward
             Right motor: reverse
         """
-        self.set_motors(1, 0, 1, 1)
+        self.set_motors(1, 1, 1, 0)
         if seconds > 0:
             sleep(seconds)
             self.stop()
@@ -400,7 +448,15 @@ class TorBot:
             if self.fRanger is not None:
                 raw_input("Measure front obstacle distance")
                 print self.fRanger.get_range_cm()
-    
+
+            if self.dRanger is not None:
+                raw_input("Measure downward obstacle distance")
+                print self.dRanger.get_range_cm()
+
+            if self.bRanger is not None:
+                raw_input("Measure backward obstacle distance")
+                print self.bRanger.get_range_cm()
+
             if self.lRanger is not None:
                 raw_input("Measure left obstacle distance")
                 print self.lRanger.get_range_cm()
@@ -459,6 +515,10 @@ class TorBot:
         if speech:
             raw_input("Test speech")
             self.speak("Hello, my name is Torbot. I am an autonomous robot.")
+
+        if camera:
+            raw_input("Test camera")
+            self.camera.close()
 
         raw_input("End of test")
 
