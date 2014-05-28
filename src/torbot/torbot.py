@@ -153,6 +153,7 @@ class TorBot:
 
     def __init__(self):
         """ Initialize some parameters. """
+        global USE_CAMERA
 
         # Silence GPIO warnings
         GPIO.setwarnings(False)
