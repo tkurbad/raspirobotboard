@@ -6,8 +6,9 @@ Source for the TorBot robot platform Python library.
 ####Prerequisites:
 
 ```
-  $ sudo apt-get install espeak i2c-tools python-espeak python-rpi.gpio \
-        python-serial python-setuptools python-smbus
+  $ sudo apt-get install espeak i2c-tools python-concurrent.futures \
+        python-espeak python-rpi.gpio python-serial python-setuptools \
+        python-smbus
 ```
 
 ####Get the sources:

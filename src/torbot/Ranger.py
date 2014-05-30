@@ -4,7 +4,7 @@ import serial
 
 from time import sleep
 
-class Ranger:
+class Ranger(object):
     """ Python class to access SRF02 ultrasonic rangers by a serial
         connection.
     """

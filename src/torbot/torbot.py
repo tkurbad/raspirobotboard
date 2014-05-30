@@ -1,8 +1,9 @@
 #!/usr/bin/python2
 # -*- coding: latin-1 -*-
 
+import concurrent.futures
 import os.path
-import threading, Queue
+import Queue
 
 try:
     import RPi.GPIO as GPIO
@@ -147,7 +148,7 @@ CAM_HFLIP           = False
 CAM_VFLIP           = False
 
 
-class TorBot:
+class TorBot(object):
     """ Control the TorBot robot platform using Python on a
         Raspberry PI. """
 
@@ -526,6 +527,6 @@ class TorBot:
         raw_input("End of test")
 
 
-class TorBotThreadController(threading.Thread):
+class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
     """ This class controls all of TorBot's threads. """
     

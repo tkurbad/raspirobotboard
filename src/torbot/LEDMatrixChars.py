@@ -3,7 +3,7 @@
 
 import re
 
-class MatrixChars:
+class MatrixChars(object):
     """ Class that holds all the characters and symbols to display on
         the LED matrix.
     """

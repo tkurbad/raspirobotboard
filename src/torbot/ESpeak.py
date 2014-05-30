@@ -10,7 +10,7 @@ import sys
 from espeak import core, espeak
 
 
-class ESpeak:
+class ESpeak(object):
     """ Class to implement high level text-to-speech methods using
         python-espeak.
     """
