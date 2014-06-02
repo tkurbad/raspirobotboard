@@ -14,7 +14,7 @@ class PiCamera(picamera.PiCamera):
     """
 
     def __init__(self):
-        """ Initialize some parameters. """
+        """ Initialize the camera. """
         # Check, if camera is connected
         self.camPresent = False
         try:
@@ -23,3 +23,29 @@ class PiCamera(picamera.PiCamera):
         except picamera.exc.PiCameraMMALError:
             print('ERROR: Camera could not be initialized. Please, check the cable.',
                 file = sys.stderr)
+
+    def set_parameters(self,
+                       crop = None,
+                       resolution = None,
+                       framerate = None,
+                       brightness = None,
+                       contrast = None,
+                       saturation = None,
+                       awb_mode = None,
+                       exposure_compensation = None,
+                       exposure_mode = None,
+                       iso = None,
+                       meter_mode = None,
+                       image_effect = None,
+                       color_effects = None,
+                       rotation = None,
+                       hflip = None,
+                       vflip = None):
+        """ Set various camera parameters. """
+        for parameter in [crop, resolution, framerate, brightness,
+                            contrast, saturation, awb_mode,
+                            exposure_compensation, exposure_mode, iso,
+                            meter_mode, image_effect, color_effects,
+                            rotation, hflip, vflip):
+            if parameter is not None:
+                eval('self.%s = %s' % (parameter, parameter))

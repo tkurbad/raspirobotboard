@@ -220,7 +220,27 @@ class TorBot(object):
 
         if USE_CAMERA:
             self.camera = PiCamera()
-            if not self.camera.camPresent:
+            if self.camera.camPresent:
+                self.camera.set_parameters(
+                    crop = CAM_CROP,
+                    resolution = CAM_RESOLUTION,
+                    framerate = CAM_FRAMERATE,
+                    brightness = CAM_BRIGHTNESS,
+                    contrast = CAM_CONTRAST,
+                    saturation = CAM_SATURATION,
+                    awb_mode = CAM_AWB_MODE,
+                    exposure_compensation = CAM_EXPOSURE_COMPENSATION,
+                    exposure_mode = CAM_EXPOSURE_MODE,
+                    iso = CAM_ISO,
+                    meter_mode = CAM_METER_MODE,
+                    image_effect = CAM_IMAGE_EFFECT,
+                    color_effects = CAM_COLOR_EFFECTS,
+                    rotation = CAM_ROTATION,
+                    hflip = CAM_HFLIP,
+                    vflip = CAM_VFLIP
+                    )
+                    
+            else:
                 USE_CAMERA = False
 
     ## motor control ###################################################
@@ -522,6 +542,7 @@ class TorBot(object):
 
         if camera and USE_CAMERA:
             raw_input("Test camera")
+            self.camera.
             self.camera.close()
 
         raw_input("End of test")
