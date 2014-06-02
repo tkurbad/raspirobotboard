@@ -4,6 +4,7 @@
 from __future__ import print_function
 
 import sys
+from io import BytesIO
 
 import picamera
 
@@ -46,6 +47,18 @@ class PiCamera(picamera.PiCamera):
                             contrast, saturation, awb_mode,
                             exposure_compensation, exposure_mode, iso,
                             meter_mode, image_effect, color_effects,
-                            rotation, hflip, vflip):
+                            rotation, hflip, vflip]:
             if parameter is not None:
                 eval('self.%s = %s' % (parameter, parameter))
+
+    def capture_stream(self, outFormat = 'jpeg'):
+        """ Capture a still in the given output format.
+            Return a stream of the capture.
+        """
+        stream = BytesIO
+        if output not in ['jpeg', 'png', 'gif', 'bmp', 'yuv', 'rgb',
+                            'rgba', 'bgr', 'bgra', 'raw']:
+            print('WARNING: Unknown picture format specified. Defaulting to jpeg.',
+                file = sys.stderr)
+        self.capture(stream, outputFormat)
+        return stream
