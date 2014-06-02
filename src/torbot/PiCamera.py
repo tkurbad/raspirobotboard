@@ -80,7 +80,7 @@ class PiCamera(picamera.PiCamera):
         """ Capture a still in the given output format.
             Return a stream of the capture.
         """
-        stream = BytesIO
+        stream = BytesIO()
         if outputFormat not in ['jpeg', 'png', 'gif', 'bmp', 'yuv', 'rgb',
                                 'rgba', 'bgr', 'bgra', 'raw']:
             print('WARNING: Unknown picture format specified. Defaulting to jpeg.',
