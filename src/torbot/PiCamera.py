@@ -86,4 +86,6 @@ class PiCamera(picamera.PiCamera):
             print('WARNING: Unknown picture format specified. Defaulting to jpeg.',
                 file = sys.stderr)
         self.capture(stream, outputFormat)
-        return stream
+        output = stream.read()
+        stream.close()
+        return output
