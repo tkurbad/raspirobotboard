@@ -751,7 +751,7 @@ class MatrixChars(object):
         # corresponding numerical LED backpack matrix to the variable _xxx.
         for varName in vars(MatrixChars).keys():
             if varName.startswith('_RAW_') and (varName != '_RAW__'):
-                setattr(MatrixChars,varName[4:], self.matrix2led(
+                setattr(MatrixChars, varName[4:], self.matrix2led(
                     eval('self.%s' % varName)))
 
     def _build_translation_dict(self):
