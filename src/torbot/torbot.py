@@ -543,7 +543,7 @@ class TorBot(object):
         if camera and USE_CAMERA:
             raw_input("Test camera")
             camCapture = self.camera.capture_stream()
-            print "%s" % camCapture[10]
+            print "%s" % camCapture[:10]
             raw_input("Free camera resources")
             self.camera.close()
 
