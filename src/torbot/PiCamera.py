@@ -43,13 +43,38 @@ class PiCamera(picamera.PiCamera):
                        hflip = None,
                        vflip = None):
         """ Set various camera parameters. """
-        for parameter in [crop, resolution, framerate, brightness,
-                            contrast, saturation, awb_mode,
-                            exposure_compensation, exposure_mode, iso,
-                            meter_mode, image_effect, color_effects,
-                            rotation, hflip, vflip]:
-            if parameter is not None:
-                eval('self.%s = %s' % (parameter, parameter))
+        if crop is not None:
+            self.crop = crop
+        if resolution is not None:
+            self.resolution = resolution
+        if framerate is not None:
+            self.framerate = framerate
+        if brightness is not None:
+            self.brightness = brightness
+        if contrast is not None:
+            self.contrast = contrast
+        if saturation is not None:
+            self.saturation = saturation
+        if awb_mode is not None:
+            self.awb_mode = awb_mode
+        if exposure_compensation is not None:
+            self.exposure_compensation = exposure_compensation
+        if exposure_mode is not None:
+            self.exposure_mode = exposure_mode
+        if iso is not None:
+            self.iso = iso
+        if meter_mode is not None:
+            self.meter_mode = meter_mode
+        if image_effect is not None:
+            self.image_effect = image_effect
+        if color_effects is not None:
+            self.color_effects = color_effects
+        if rotation is not None:
+            self.rotation = rotation
+        if hflip is not None:
+            self.hflip = hflip
+        if vflip is not None:
+            self.vflip = vflip
 
     def capture_stream(self, outFormat = 'jpeg'):
         """ Capture a still in the given output format.
