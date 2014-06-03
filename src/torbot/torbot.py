@@ -472,21 +472,31 @@ class TorBot(object):
             if self.fRanger is not None:
                 raw_input("Measure front obstacle distance")
                 print self.fRanger.get_range_cm()
+                print self.fRanger.get_range_cm()
+                print self.fRanger.get_range_cm()
 
             if self.dRanger is not None:
                 raw_input("Measure downward obstacle distance")
+                print self.dRanger.get_range_cm()
+                print self.dRanger.get_range_cm()
                 print self.dRanger.get_range_cm()
 
             if self.bRanger is not None:
                 raw_input("Measure backward obstacle distance")
                 print self.bRanger.get_range_cm()
+                print self.bRanger.get_range_cm()
+                print self.bRanger.get_range_cm()
 
             if self.lRanger is not None:
                 raw_input("Measure left obstacle distance")
                 print self.lRanger.get_range_cm()
+                print self.lRanger.get_range_cm()
+                print self.lRanger.get_range_cm()
     
             if self.rRanger is not None:
                 raw_input("Measure right obstacle distance")
+                print self.rRanger.get_range_cm()
+                print self.rRanger.get_range_cm()
                 print self.rRanger.get_range_cm()
 
         if opencollectors:
