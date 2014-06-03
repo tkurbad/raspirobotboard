@@ -3,8 +3,10 @@
 
 from __future__ import print_function
 
+import io
 import sys
-from io import BytesIO
+
+from time import sleep
 
 import picamera
 
@@ -80,10 +82,10 @@ class PiCamera(picamera.PiCamera):
         """ Capture a still in the given output format.
             Return a stream of the capture.
         """
-        stream = BytesIO()
+        camStream = io.BytesIO()
         if outputFormat not in ['jpeg', 'png', 'gif', 'bmp', 'yuv', 'rgb',
                                 'rgba', 'bgr', 'bgra', 'raw']:
             print('WARNING: Unknown picture format specified. Defaulting to jpeg.',
                 file = sys.stderr)
-        self.capture(stream, outputFormat)
-        return stream
+        self.capture(camStream, format = outputFormat)
+        return camStream.getvalue()
