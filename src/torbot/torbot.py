@@ -554,7 +554,7 @@ class TorBot(object):
             raw_input("Test camera")
             camCapture = self.camera.capture_stream()
             if isinstance(camCapture, basestring) and (len(camCapture) >= 10):
-                print "%s" % camCapture[:10]
+                print "%s" % camCapture[6:10]
             else:
                 print "Warning: Invalid camera output detected."
             raw_input("Free camera resources")
