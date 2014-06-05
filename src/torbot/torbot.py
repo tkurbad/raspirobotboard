@@ -569,7 +569,7 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
 
     def __init__(self, *args, **kwargs):
         super(TorBotThreadController, self).__init__(*args,
-                                                    max_workers = 5,
+                                                    max_workers = 3,
                                                     **kwargs)
         self.bot = TorBot()
 
@@ -601,6 +601,7 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
         self.submit(self.get_ranger, ranger)
 
     def test(self):
+        import pdb; pdb.set_trace()
         self.get_ranger(FRANGER)
         self.get_ranger(DRANGER)
         self.get_ranger(BRANGER)
