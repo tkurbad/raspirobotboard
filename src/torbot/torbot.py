@@ -606,5 +606,6 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
         self.get_ranger(BRANGER)
         self.get_ranger(RRANGER)
         self.get_ranger(LRANGER)
+        sleep(0.5)
         while not self.ranges.empty():
             print self.ranges.get()
