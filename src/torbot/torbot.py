@@ -3,7 +3,8 @@
 
 import concurrent.futures
 import os.path
-import Queue
+
+from Queue import Queue
 
 try:
     import RPi.GPIO as GPIO
@@ -72,11 +73,11 @@ if not os.path.exists('/dev/ttyAMA0'):
     SER_BAUD        = 115200
 
 # SRF02 range finder addresses
-FRONT_RANGER_ADDR   = 5
-DOWN_RANGER_ADDR    = 4
-BACK_RANGER_ADDR    = 3
-LEFT_RANGER_ADDR    = 2
-RIGHT_RANGER_ADDR   = 1
+FRONT_RANGER_ADDR   = FRANGER = 5
+DOWN_RANGER_ADDR    = DRANGER = 4
+BACK_RANGER_ADDR    = BRANGER = 3
+LEFT_RANGER_ADDR    = LRANGER = 2
+RIGHT_RANGER_ADDR   = RRANGER = 1
 
 # GPIO setup - motors
 # !NOTE! TorBot works better "backwards", thus left and right have been
@@ -565,4 +566,45 @@ class TorBot(object):
 
 class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
     """ This class controls all of TorBot's threads. """
-    
+
+    def __init__(self, args*, kwargs**):
+        super(TorBotThreadController, self).__init__(args,
+                                                    max_workers = 5,
+                                                    kwargs)
+        self.bot = TorBot()
+
+        self.RANGERS_MAP = dict()
+        for rangers in [(FRANGER, 'fRanger'), (DRANGER, 'dRanger'),
+                        (BRANGER, 'bRanger'), (LRANGER, 'lRanger'),
+                        (RRANGER, 'rRanger')]:
+            if ranger[0] is not None:
+                self.RANGERS_MAP[ranger[0]] = ranger[1]
+
+        self.ranges = Queue()
+        self.threads = []
+
+    def _get_ranger(self, ranger, iterations = 3, pause = 0.1):
+        """ Get (averaged) ranger information and put the result in a
+            Queue.
+        """
+        if ranger not in self.RANGERS_MAP.keys():
+            raise Exception('The ranger %s does not exist.' % ranger)
+
+        results = []
+        for i in range(0, iterations):
+            results.append(eval('self.bot.%s.get_range_cm()'
+                                % self.RANGERS_MAP[ranger]))
+            sleep(pause)
+        self.ranges.put(sum(results, 0.0) / len(results))
+
+    def get_ranger(self, ranger):
+        self.submit(self.get_ranger, ranger)
+
+    def test(self):
+        self.get_ranger(FRANGER)
+        self.get_ranger(DRANGER)
+        self.get_ranger(BRANGER)
+        self.get_ranger(RRANGER)
+        self.get_ranger(LRANGER)
+        while not self.ranges.empty():
+            print ranges.get()
