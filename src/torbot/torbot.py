@@ -587,6 +587,7 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
         """ Get (averaged) ranger information and put the result in a
             Queue.
         """
+        import pdb; pdb.set_trace()
         if ranger not in self.RANGERS_MAP.keys():
             raise Exception('The ranger %s does not exist.' % ranger)
 
@@ -598,10 +599,9 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
         self.ranges.put(sum(results, 0.0) / len(results))
 
     def get_ranger(self, ranger):
-        self.submit(self.get_ranger, ranger)
+        self.submit(self._get_ranger, ranger)
 
     def test(self):
-        import pdb; pdb.set_trace()
         self.get_ranger(FRANGER)
         self.get_ranger(DRANGER)
         self.get_ranger(BRANGER)
