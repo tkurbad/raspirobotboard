@@ -567,10 +567,10 @@ class TorBot(object):
 class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
     """ This class controls all of TorBot's threads. """
 
-    def __init__(self, args*, kwargs**):
-        super(TorBotThreadController, self).__init__(args,
+    def __init__(self, *args, **kwargs):
+        super(TorBotThreadController, self).__init__(*args,
                                                     max_workers = 5,
-                                                    kwargs)
+                                                    **kwargs)
         self.bot = TorBot()
 
         self.RANGERS_MAP = dict()

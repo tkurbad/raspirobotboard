@@ -16,12 +16,12 @@ class PiCamera(picamera.PiCamera):
         PiCamera class.
     """
 
-    def __init__(self, args*, kwargs**):
+    def __init__(self, *args, **kwargs):
         """ Initialize the camera. """
         # Check, if camera is connected
         self.camPresent = False
         try:
-            super(PiCamera, self).__init__(args, kwargs)
+            super(PiCamera, self).__init__(*args, **kwargs)
             self.camPresent = True
         except picamera.exc.PiCameraMMALError:
             print('ERROR: Camera could not be initialized. Please, check the cable.',
