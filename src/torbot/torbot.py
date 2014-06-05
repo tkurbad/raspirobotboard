@@ -581,7 +581,7 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
                 self.RANGERS_MAP[ranger[0]] = ranger[1]
 
         self.ranges = Queue()
-        self.threads = []
+        self.rangingThreads = []
 
     def _get_ranger(self, ranger, iterations = 3, pause = 0.1):
         """ Get (averaged) ranger information and put the result in a
@@ -598,7 +598,7 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
         self.ranges.put_nowait({ranger: sum(results, 0.0) / len(results)})
 
     def get_ranger(self, ranger):
-        self.submit(self._get_ranger, ranger)
+        self.rangingThreads.append(self.submit(self._get_ranger, ranger))
 
     def test(self):
         self.get_ranger(FRANGER)
@@ -606,6 +606,6 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
         self.get_ranger(BRANGER)
         self.get_ranger(RRANGER)
         self.get_ranger(LRANGER)
-        concurrent.futures.wait(self, timeout = 1)
+        concurrent.futures.wait(self.rangingThreads, timeout = 1)
         while not self.ranges.empty():
             print self.ranges.get()
