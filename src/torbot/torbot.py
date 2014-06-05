@@ -574,9 +574,9 @@ class TorBotThreadController(concurrent.futures.ThreadPoolExecutor):
         self.bot = TorBot()
 
         self.RANGERS_MAP = dict()
-        for rangers in [(FRANGER, 'fRanger'), (DRANGER, 'dRanger'),
-                        (BRANGER, 'bRanger'), (LRANGER, 'lRanger'),
-                        (RRANGER, 'rRanger')]:
+        for ranger in [(FRANGER, 'fRanger'), (DRANGER, 'dRanger'),
+                       (BRANGER, 'bRanger'), (LRANGER, 'lRanger'),
+                       (RRANGER, 'rRanger')]:
             if ranger[0] is not None:
                 self.RANGERS_MAP[ranger[0]] = ranger[1]
 
