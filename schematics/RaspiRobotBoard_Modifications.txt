@@ -1,9 +1,0 @@
-            Modifications made to the RaspiRobotBoard
-            =========================================
-
-1) To get the odometers to work, the pull-up resistors R3 and R4 (both
-    1k) have to be removed.
-
-2) To be able to feed more power (up to 2A instead of 1A) to the
-    RaspberryPI, replace the LM2940 voltage regulator with the more
-    powerful, pin-compatible L78S05CV.

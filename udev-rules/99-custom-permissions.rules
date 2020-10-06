@@ -1,8 +1,0 @@
-# serial
-KERNEL=="ttyAMA0",		MODE="0660",	GROUP="dialout"
-
-# misc devices
-KERNEL=="mem",			MODE="0660",	GROUP="kmem"
-KERNEL=="kmem",			MODE="0660",	GROUP="kmem"
-KERNEL=="port",			MODE="0660",	GROUP="kmem"
-KERNEL=="nvram",		MODE="0660",	GROUP="kmem"
